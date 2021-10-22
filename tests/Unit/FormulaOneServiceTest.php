@@ -7,3 +7,9 @@ test('it can fetch all available f1 seasons', function () {
 
     expect($seasons)->toBeArray();
 })->group('integration');
+
+test('it can fetch all F1 tracks', function () {
+    $seasons = app(FormulaOneService::class)->getAllTracks();
+
+    expect($seasons)->toBeArray();
+})->group('integration');
