@@ -13,3 +13,9 @@ test('it can fetch all F1 tracks', function () {
 
     expect($seasons)->toBeArray();
 })->group('integration');
+
+test('it can fetch all F1 drivers', function () {
+    $seasons = app(FormulaOneService::class)->getAllDrivers();
+
+    expect($seasons)->toBeArray();
+})->group('integration');
