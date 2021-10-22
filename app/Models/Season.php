@@ -13,4 +13,9 @@ class Season extends Model
         'season',
         'wikipedia_url',
     ];
+
+    public function drivers()
+    {
+        return $this->belongsToMany(Driver::class);
+    }
 }

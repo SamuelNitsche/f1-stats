@@ -17,6 +17,16 @@ class FormulaOneService
     {
         return $this->request('/circuits.json?limit=300')['MRData']['CircuitTable']['Circuits'];
     }
+
+    public function getAllDrivers($year = null)
+    {
+        if ($year) {
+            return $this->request("/{$year}/drivers.json?limit=1000")['MRData']['DriverTable']['Drivers'];
+        }
+
+        return $this->request('/drivers.json?limit=1000')['MRData']['DriverTable']['Drivers'];
+    }
+
     protected function request($endpoint, $headers = [])
     {
         return Http::acceptJson()
