@@ -14,6 +14,11 @@ class Season extends Model
         'wikipedia_url',
     ];
 
+    public function rounds()
+    {
+        return $this->hasMany(Round::class)->orderBy('round');
+    }
+
     public function drivers()
     {
         return $this->belongsToMany(Driver::class);
