@@ -22,6 +22,12 @@ class FormulaOneService
     {
         return $this->request('/' . $season . '.json')['MRData']['RaceTable']['Races'];
     }
+
+    public function getLatestSession()
+    {
+        return $this->request('/current/last/results.json')['MRData']['RaceTable']['Races'];
+    }
+
     public function getAllTracks()
     {
         return $this->request('/circuits.json?limit=300')['MRData']['CircuitTable']['Circuits'];
