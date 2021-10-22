@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Driver;
+use App\Models\Round;
+use App\Models\Season;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,33 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/seasons', function () {
+    return view('seasons.index', [
+        'seasons' => Season::all(),
+    ]);
+})->name('seasons.index');
+
+Route::get('/seasons/{season:year}', function (Season $season) {
+    return view('seasons.show', [
+        'season' => $season,
+    ]);
+})->name('seasons.show');
+
+Route::get('/seasons/{season:year}/{round:round}', function (Season $season, Round $round) {
+    return view('rounds.show', [
+        'round' => $round,
+    ]);
+})->name('rounds.show');
+
+Route::get('/drivers', function () {
+    return view('drivers.index', [
+        'drivers' => Driver::all(),
+    ]);
+})->name('drivers.index');
+
+Route::get('/drivers/{driver:slug}', function (Driver $driver) {
+    return view('drivers.show', [
+        'driver' => $driver,
+    ]);
+})->name('drivers.show');
