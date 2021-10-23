@@ -50,7 +50,7 @@ class SyncRacesCommand extends Command
                 'round_id' => $round->id,
                 'track_id' => $race->track_id,
                 'race_id' => $race->id,
-                'position' => $result['grid'],
+                'position' => $result['position'],
                 'status' => $result['status'],
                 'laps' => $result['laps'],
                 'total_time_millis' => $result['Time']['millis'] ?? null,
