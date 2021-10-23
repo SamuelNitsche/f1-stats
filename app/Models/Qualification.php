@@ -17,7 +17,12 @@ class Qualification extends Model
 
     public function drivers()
     {
-        return $this->belongsToMany(Driver::class)->using(DriverQualification::class);
+        return $this->belongsToMany(Driver::class)->using(DriverQualification::class)->withPivot([
+            'position',
+            'q1_time',
+            'q2_time',
+            'q3_time',
+        ]);
     }
 
     public function track()

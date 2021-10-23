@@ -16,7 +16,13 @@ class Driver extends Model
 
     public function qualifications()
     {
-        return $this->belongsToMany(Qualification::class)->using(DriverQualification::class);
+        return $this->belongsToMany(Qualification::class)->using(DriverQualification::class)->withPivot([
+            'position',
+            'q1_time',
+            'q2_time',
+            'q3_time',
+        ]);
+    }
 
     public function races()
     {
