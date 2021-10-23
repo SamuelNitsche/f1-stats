@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->foreignId('driver_id')->constrained()->cascadeOnDelete();
             $table->foreignId('qualification_id')->constrained()->cascadeOnDelete();
             $table->foreignId('track_id')->constrained()->cascadeOnDelete();
-            $table->string('position');
+            $table->integer('position');
             $table->string('q1_time');
             $table->string('q2_time')->nullable();
             $table->string('q3_time')->nullable();
