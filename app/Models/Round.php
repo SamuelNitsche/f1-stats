@@ -18,4 +18,14 @@ class Round extends Model
     {
         return $this->belongsTo(Track::class);
     }
+
+    public function qualification()
+    {
+        return $this->hasOne(Qualification::class);
+    }
+
+    public function race()
+    {
+        return $this->hasOne(Race::class);
+    }
 }
