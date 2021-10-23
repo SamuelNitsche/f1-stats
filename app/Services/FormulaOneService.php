@@ -33,6 +33,11 @@ class FormulaOneService
         return $this->request("/{$season}/{$round}/qualifying.json")['MRData']['RaceTable']['Races'];
     }
 
+    public function getRace($season, $round)
+    {
+        return $this->request("/{$season}/{$round}/results.json")['MRData']['RaceTable']['Races'];
+    }
+
     public function getAllTracks()
     {
         return $this->request('/circuits.json?limit=300')['MRData']['CircuitTable']['Circuits'];

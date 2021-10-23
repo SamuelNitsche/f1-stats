@@ -43,3 +43,9 @@ test('it can fetch a qualifying by season and round', function () {
 
     expect($seasons)->toBeArray();
 })->group('integration');
+
+test('it can fetch a race by season and round', function () {
+    $seasons = app(FormulaOneService::class)->getRace(season: 2021, round: 1);
+
+    expect($seasons)->toBeArray();
+})->group('integration');
