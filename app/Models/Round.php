@@ -9,6 +9,11 @@ class Round extends Model
 {
     use HasFactory;
 
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
+
     public function track()
     {
         return $this->belongsTo(Track::class);
