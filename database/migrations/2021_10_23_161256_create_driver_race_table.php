@@ -13,8 +13,10 @@ return new class extends Migration {
             $table->foreignId('round_id')->constrained()->cascadeOnDelete();
             $table->foreignId('track_id')->constrained()->cascadeOnDelete();
             $table->integer('position');
+            $table->integer('grid');
             $table->string('status');
             $table->integer('laps');
+            $table->integer('points');
             $table->integer('total_time_millis')->nullable();
             $table->string('total_time')->nullable();
             $table->string('fastest_lap_time')->nullable();
