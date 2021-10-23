@@ -3,6 +3,7 @@
 use App\Models\Driver;
 use App\Models\Round;
 use App\Models\Season;
+use App\Models\Track;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,3 +50,15 @@ Route::get('/drivers/{driver:slug}', function (Driver $driver) {
         'driver' => $driver,
     ]);
 })->name('drivers.show');
+
+Route::get('/tracks', function () {
+    return view('tracks.index', [
+        'tracks' => Track::all(),
+    ]);
+})->name('tracks.index');
+
+Route::get('/tracks/{track:slug}', function (Track $track) {
+    return view('tracks.show', [
+        'track' => $track,
+    ]);
+})->name('tracks.show');
