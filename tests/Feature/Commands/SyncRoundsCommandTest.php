@@ -6,9 +6,9 @@ use function Pest\Laravel\artisan;
 use function Pest\Laravel\assertDatabaseHas;
 
 test('it can sync all rounds', function () {
+    fakeFormulaOneApi();
     seedTracks();
     seedSeasons();
-    fakeRoundsRequest();
 
     artisan(SyncRoundsCommand::class)->assertExitCode(0);
 

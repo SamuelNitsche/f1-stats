@@ -3,9 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Driver;
-use App\Models\Round;
-use App\Models\Season;
-use App\Models\Track;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 
@@ -26,7 +23,6 @@ class SyncDriversCommand extends Command
 
     public function handle()
     {
-
         $drivers = $this->service->getAllDrivers();
 
         $drivers = collect($drivers)->map(fn($driver) => [

@@ -6,7 +6,7 @@ use function Pest\Laravel\artisan;
 use function Pest\Laravel\assertDatabaseHas;
 
 test('it can sync all drivers', function () {
-    fakeTracksRequest();
+    fakeFormulaOneApi();
 
     artisan(SyncDriversCommand::class)->assertExitCode(0);
 

@@ -6,7 +6,7 @@ use function Pest\Laravel\artisan;
 use function Pest\Laravel\assertDatabaseHas;
 
 test('it can sync all seasons', function () {
-    fakeSeasonsRequest();
+    fakeFormulaOneApi();
 
     artisan(SyncSeasonsCommand::class)->assertExitCode(0);
 
