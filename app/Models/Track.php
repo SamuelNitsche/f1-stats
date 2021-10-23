@@ -13,4 +13,14 @@ class Track extends Model
     {
         return $this->hasMany(Qualification::class);
     }
+
+    public function rounds()
+    {
+        return $this->hasMany(Round::class);
+    }
+
+    public function races()
+    {
+        return $this->hasMany(Race::class);
+    }
 }
