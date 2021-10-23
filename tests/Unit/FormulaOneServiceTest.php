@@ -37,3 +37,9 @@ test('it can fetch all F1 drivers', function () {
 
     expect($seasons)->toBeArray();
 })->group('integration');
+
+test('it can fetch a qualifying by season and round', function () {
+    $seasons = app(FormulaOneService::class)->getQualification(season: 2021, round: 1);
+
+    expect($seasons)->toBeArray();
+})->group('integration');

@@ -23,6 +23,7 @@ class SyncAllCommand extends Command
         Artisan::call('f1:seasons:sync');
         Artisan::call('f1:rounds:sync');
         Artisan::call('f1:drivers-per-season:sync');
+        Artisan::call('f1:qualifications:sync');
 
         return Command::SUCCESS;
     }
