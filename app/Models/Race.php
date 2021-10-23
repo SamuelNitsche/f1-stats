@@ -17,6 +17,20 @@ class Race extends Model
 
     public function drivers()
     {
-        return $this->belongsToMany(Driver::class)->using(DriverRace::class);
+        return $this->belongsToMany(Driver::class)
+            ->using(DriverRace::class)
+            ->orderBy('position')
+            ->withPivot([
+                'position',
+                'grid',
+                'status',
+                'laps',
+                'points',
+                'total_time_millis',
+                'total_time',
+                'fastest_lap_time',
+                'fastest_lap_number',
+                'fastest_lap_rank',
+            ]);
     }
 }
