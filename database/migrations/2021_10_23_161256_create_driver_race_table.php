@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->integer('grid');
             $table->string('status');
             $table->integer('laps');
-            $table->integer('points');
+            $table->float('points');
             $table->integer('total_time_millis')->nullable();
             $table->string('total_time')->nullable();
             $table->string('fastest_lap_time')->nullable();

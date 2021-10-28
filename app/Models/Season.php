@@ -23,4 +23,19 @@ class Season extends Model
     {
         return $this->belongsToMany(Driver::class);
     }
+
+    public function getChampionshipLeader()
+    {
+        return $this
+            ->drivers()
+            ->with('races')
+            ->get()
+            ->sortByDesc(function (Driver $driver) {
+                return $driver
+                    ->races()
+                    ->where('season_id', $this->id)
+                    ->sum('points');
+            })
+            ->first();
+    }
 }
