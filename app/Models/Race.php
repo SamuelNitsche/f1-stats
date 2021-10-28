@@ -33,4 +33,9 @@ class Race extends Model
                 'fastest_lap_rank',
             ]);
     }
+
+    public function winner()
+    {
+        return $this->hasOne(DriverRace::class)->where('position', 1);
+    }
 }
