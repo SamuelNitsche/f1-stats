@@ -28,7 +28,7 @@ class SyncRacesCommand extends Command
     {
         $tracks = Track::all();
         $drivers = Driver::all();
-        $rounds = Round::all();
+        $rounds = Round::with('season')->get();
 
         $rounds->map(function (Round $round) use ($tracks, $drivers) {
             $apiRace = $this->service->getRace(season: $round->season->year, round: $round->round);
