@@ -47,7 +47,7 @@ Route::get('/drivers', function () {
 
 Route::get('/drivers/{driver:slug}', function (Driver $driver) {
     return view('drivers.show', [
-        'driver' => $driver,
+        'driver' => $driver->load('seasons'),
     ]);
 })->name('drivers.show');
 
