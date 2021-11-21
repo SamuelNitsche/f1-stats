@@ -18,8 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $currentSeason = Season::where('year', now()->year)->first();
+    $upcomingRound = Round::upcoming()->first();
+
+    return view('welcome', [
+        'currentSeason' => $currentSeason,
+        'upcomingRound' => $upcomingRound,
+    ]);
+})->name('home');
 
 Route::get('/seasons', function () {
     return view('seasons.index', [
@@ -53,12 +59,12 @@ Route::get('/drivers/{driver:slug}', function (Driver $driver) {
 
 Route::get('/tracks', function () {
     return view('tracks.index', [
-        'tracks' => Track::all(),
+        'tracks' => Track::orderBy('name')->get(),
     ]);
 })->name('tracks.index');
 
 Route::get('/tracks/{track:slug}', function (Track $track) {
     return view('tracks.show', [
-        'track' => $track,
+        'track' => $track->load('rounds.season', 'rounds.qualification.drivers', 'rounds.race.drivers'),
     ]);
 })->name('tracks.show');

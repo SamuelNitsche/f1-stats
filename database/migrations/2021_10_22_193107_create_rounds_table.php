@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->foreignId('track_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('round');
+            $table->dateTime('date');
             $table->string('wikipedia_url');
             $table->timestamps();
 

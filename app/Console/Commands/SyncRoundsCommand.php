@@ -7,6 +7,7 @@ use App\Models\Season;
 use App\Models\Track;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class SyncRoundsCommand extends Command
 {
@@ -36,6 +37,7 @@ class SyncRoundsCommand extends Command
                 'track_id' => $tracks->firstWhere('slug', $round['Circuit']['circuitId'])->id,
                 'round' => $round['round'],
                 'name' => $round['raceName'],
+                'date' => Carbon::parse($round['date'] . " " . $round['time']),
                 'wikipedia_url' => $round['url'],
             ])->toArray();
 
