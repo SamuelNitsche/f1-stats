@@ -3,6 +3,15 @@
 @section('title', 'Home')
 
 @section('content')
+  <p>Last Race</p>
+  <p>
+    <a
+        href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}"
+    >{{ $previousRound->name }}</a>
+  </p>
+
+  <br>
+
   <p>Next Race</p>
   <p>
     <a

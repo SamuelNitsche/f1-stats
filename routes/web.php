@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $currentSeason = Season::where('year', now()->year)->first();
+    $previousRound = Round::previous()->first();
     $upcomingRound = Round::upcoming()->first();
 
-    return view('welcome', [
+    return view('home', [
         'currentSeason' => $currentSeason,
+        'previousRound' => $previousRound,
         'upcomingRound' => $upcomingRound,
     ]);
 })->name('home');
