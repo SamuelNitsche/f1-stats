@@ -38,4 +38,9 @@ class Race extends Model
     {
         return $this->hasOne(DriverRace::class)->where('position', 1);
     }
+
+    public function fastestLap()
+    {
+        return $this->hasOne(DriverRace::class)->orderByRaw('TIME_TO_SEC(fastest_lap_time)');
+    }
 }
