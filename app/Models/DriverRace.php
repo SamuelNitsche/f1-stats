@@ -11,7 +11,8 @@ class DriverRace extends Pivot
         return $this->getDiffSign($this->position, $this->grid);
     }
 
-    protected function getDiffSign($a, $b) {
+    protected function getDiffSign($a, $b)
+    {
         if ($a > $b) {
             return '+' . $this->getDiff($a, $b);
         } elseif ($a < $b) {
@@ -21,7 +22,8 @@ class DriverRace extends Pivot
         }
     }
 
-    protected function getDiff($a, $b) {
+    protected function getDiff($a, $b)
+    {
         return abs($a - $b);
     }
 }
