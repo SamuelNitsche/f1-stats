@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class DriverRace extends Pivot
 {
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
+    
     public function getPositionsGainedOrLost()
     {
         return $this->getDiffSign($this->position, $this->grid);
