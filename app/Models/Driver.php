@@ -50,4 +50,13 @@ class Driver extends Model
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function points($season = null)
+    {
+        if (!$season) {
+            $season = Season::orderByDesc('year')->first();
+        }
+
+        return $this->races()->where('season_id', $season->id)->sum('points');
+    }
 }
