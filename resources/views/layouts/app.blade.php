@@ -25,6 +25,8 @@
     </li>
   </ul>
 </nav>
-@yield('content')
+<main class="max-w-3xl mx-auto">
+    @yield('content')
+</main>
 </body>
 </html>
