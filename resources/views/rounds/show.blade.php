@@ -7,6 +7,9 @@
 
     <p>GP Name: {{ $round->name }}</p>
     <p>Track Name: {{ $round->track->name  }}</p>
+    @if ($round->race && $lap = $round->race->fastestLap)
+        <p>Fastest Lap: {{ $lap->driver->full_name }} - {{ $lap->fastest_lap_time }}</p>
+    @endif
 
     @if ($round->qualification)
         <div class="text-lg mt-4">Qualifying</div>
@@ -45,6 +48,7 @@
                 <th>Total Time</th>
                 <th>Status</th>
                 <th>Laps</th>
+                <th>Fastest Lap</th>
                 <th>Points</th>
             </tr>
             </thead>
@@ -58,6 +62,7 @@
                     <td>{{ $driver->pivot->total_time }}</td>
                     <td>{{ $driver->pivot->status }}</td>
                     <td>{{ $driver->pivot->laps }}</td>
+                    <td>{{ $driver->pivot->fastest_lap_time }}</td>
                     <td>{{ $driver->pivot->points }}</td>
                 </tr>
             @endforeach
