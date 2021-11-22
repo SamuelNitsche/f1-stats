@@ -14,6 +14,13 @@ class Round extends Model
         'date',
     ];
 
+    public function scopePrevious(Builder $query)
+    {
+        return $query
+            ->where('date', '<=', now())
+            ->orderByDesc('date');
+    }
+
     public function scopeUpcoming(Builder $query)
     {
         return $query
