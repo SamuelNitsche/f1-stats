@@ -15,6 +15,16 @@ class Race extends Model
         'track_id',
     ];
 
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
+
+    public function track()
+    {
+        return $this->belongsTo(Track::class);
+    }
+
     public function drivers()
     {
         return $this->belongsToMany(Driver::class)
