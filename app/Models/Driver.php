@@ -59,4 +59,9 @@ class Driver extends Model
 
         return $this->races()->where('season_id', $season->id)->sum('points');
     }
+
+    public function getLink()
+    {
+        return route('drivers.show', $this);
+    }
 }

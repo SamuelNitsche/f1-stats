@@ -8,7 +8,7 @@
     <p>GP Name: {{ $round->name }}</p>
     <p>Track Name: {{ $round->track->name  }}</p>
     @if ($round->race && $lap = $round->race->fastestLap)
-        <p>Fastest Lap: {{ $lap->driver->full_name }} - {{ $lap->fastest_lap_time }}</p>
+        <p>Fastest Lap: {{ $lap->fastest_lap_time }} <a href="{{ $lap->driver->getLink() }}">({{ $lap->driver->full_name }})</a></p>
     @endif
 
     @if ($round->race)
