@@ -3,16 +3,14 @@
 @section('title', 'Home')
 
 @section('content')
-    <p>Last Race</p>
+    <h4>Last Race</h4>
     <p>
         <a
             href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}"
         >{{ $previousRound->name }}</a>
     </p>
 
-    <br>
-
-    <p>Next Race</p>
+    <h4>Next Race</h4>
     <p>
         <a
             href="{{ route('rounds.show', [$upcomingRound->season, $upcomingRound]) }}"
@@ -21,7 +19,7 @@
         </a>
     </p>
 
-    <p>Current standins</p>
+    <h4>Current standings</h4>
     <table class="text-left">
         <thead>
         <tr>

@@ -12,7 +12,8 @@
     @endif
 
     @if ($round->race)
-        <div class="text-lg mt-4">Race</div>
+        <h4>Race</h4>
+
         <table style="text-align: left;">
             <thead>
             <tr>
@@ -56,7 +57,8 @@
     @endif
 
     @if ($round->qualification)
-        <div class="text-lg mt-4">Qualifying</div>
+        <h4>Qualifying</h4>
+
         <table style="text-align: left">
             <thead>
             <tr>
