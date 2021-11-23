@@ -8,6 +8,7 @@ use App\Models\Season;
 use App\Models\Track;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 
 class SyncAllCommand extends Command
@@ -18,6 +19,8 @@ class SyncAllCommand extends Command
 
     public function handle()
     {
+        $start = Carbon::parse(microtime(true));
+
         if (!$year = $this->argument('year')) {
             Artisan::call('f1:drivers:sync');
             Artisan::call('f1:tracks:sync');
@@ -31,5 +34,11 @@ class SyncAllCommand extends Command
             Artisan::call('f1:qualifications:sync', ['year' => $year]);
             Artisan::call('f1:races:sync', ['year' => $year]);
         }
+
+        $end = Carbon::parse(microtime(true));
+
+        $this->info("Finished successfully after " . $start->longAbsoluteDiffForHumans($end));
+
+        return self::SUCCESS;
     }
 }
