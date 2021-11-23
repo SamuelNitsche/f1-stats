@@ -5,13 +5,14 @@ namespace App\Console\Commands;
 use App\Models\Driver;
 use App\Models\Race;
 use App\Models\Round;
+use App\Models\Season;
 use App\Models\Track;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 
 class SyncRacesCommand extends Command
 {
-    protected $signature = 'f1:races:sync';
+    protected $signature = 'f1:races:sync {year?}';
 
     protected $description = 'Sync all F1 races';
 
@@ -28,7 +29,13 @@ class SyncRacesCommand extends Command
     {
         $tracks = Track::all();
         $drivers = Driver::all();
-        $rounds = Round::with('season')->get();
+        $roundsQuery = Round::query()->with('season');
+
+        if ($year = $this->argument('year')) {
+            $rounds = $roundsQuery->where('season_id', Season::where('year', $year)->first()->id)->get();
+        } else {
+            $rounds = $roundsQuery->get();
+        }
 
         $rounds->map(function (Round $round) use ($tracks, $drivers) {
             $apiRace = $this->service->getRace(season: $round->season->year, round: $round->round);

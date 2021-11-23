@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 
 class SyncQualificationsCommand extends Command
 {
-    protected $signature = 'f1:qualifications:sync';
+    protected $signature = 'f1:qualifications:sync {year?}';
 
     protected $description = 'Sync all F1 qualifications';
 
@@ -29,7 +29,13 @@ class SyncQualificationsCommand extends Command
     {
         $tracks = Track::all();
         $drivers = Driver::all();
-        $rounds = Round::with('season')->get();
+        $roundsQuery = Round::query()->with('season');
+
+        if ($year = $this->argument('year')) {
+            $rounds = $roundsQuery->where('season_id', Season::where('year', $year)->first()->id)->get();
+        } else {
+            $rounds = $roundsQuery->get();
+        }
 
         $rounds->map(function (Round $round) use ($tracks, $drivers) {
             $apiQualification = $this->service->getQualification(season: $round->season->year, round: $round->round);

@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 class SyncRoundsCommand extends Command
 {
-    protected $signature = 'f1:rounds:sync';
+    protected $signature = 'f1:rounds:sync {year?}';
 
     protected $description = 'Sync all F1 rounds';
 
@@ -26,8 +26,14 @@ class SyncRoundsCommand extends Command
 
     public function handle()
     {
-        $seasons = Season::all();
+        $seasonsQuery = Season::query();
         $tracks = Track::all();
+
+        if ($year = $this->argument('year')) {
+            $seasons = $seasonsQuery->where('year', $year)->get();
+        } else {
+            $seasons = $seasonsQuery->get();
+        }
 
         $seasons->map(function (Season $season) use ($tracks) {
             $rounds = $this->service->getAllRounds($season->year);
