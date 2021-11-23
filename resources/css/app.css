@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color: #fff;
+    --border: #fff;
+}
+
+a {
+    border: none;
+    margin: 0 1rem 0 0;
+}
