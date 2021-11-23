@@ -16,14 +16,14 @@
         <table style="text-align: left;">
             <thead>
             <tr>
-                <th>Position</th>
-                <th>Driver Name</th>
+                <th>Pos</th>
+                <th>Driver</th>
                 <th>Grid</th>
-                <th>Total Time</th>
+                <th>Time</th>
                 <th>Status</th>
                 <th>Laps</th>
                 <th>Fastest Lap</th>
-                <th>Points</th>
+                <th>Pts</th>
             </tr>
             </thead>
             <tbody>
