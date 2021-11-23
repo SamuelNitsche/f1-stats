@@ -55,7 +55,18 @@
             <tbody>
             @foreach($round->race->drivers as $driver)
                 <tr>
-                    <td>{{ $driver->pivot->position }} <small>{{ $driver->pivot->getPositionsGainedOrLost() }}</small>
+                    <td>
+                        <span class="mr-2">{{ $driver->pivot->position }}</span>
+
+                        @if ($driver->pivot->hasChangedPosition())
+                            {{ $driver->pivot->getPositionDiff() }}
+
+                            @if ($driver->pivot->hasLostPositions())
+                                <span class="text-red-600">▼</span>
+                            @elseif ($driver->pivot->hasGainedPositions())
+                                <span class="text-green-600">▲</span>
+                            @endif
+                        @endif
                     </td>
                     <td>{{ $driver->full_name }}</td>
                     <td>{{ $driver->pivot->grid }}</td>
