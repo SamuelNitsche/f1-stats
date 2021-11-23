@@ -10,25 +10,35 @@ class DriverRace extends Pivot
     {
         return $this->belongsTo(Driver::class);
     }
-    
-    public function getPositionsGainedOrLost()
+
+    public function hasChangedPosition()
     {
-        return $this->getDiffSign($this->position, $this->grid);
+        return $this->hasGainedPositions() || $this->hasLostPositions();
     }
 
-    protected function getDiffSign($a, $b)
+    public function hasLostPositions()
     {
-        if ($a > $b) {
-            return '+' . $this->getDiff($a, $b);
-        } elseif ($a < $b) {
-            return '-' . $this->getDiff($a, $b);
+        return $this->position > $this->grid;
+    }
+
+    public function hasGainedPositions()
+    {
+        return $this->position < $this->grid;
+    }
+
+    public function getPositionDiff()
+    {
+        return abs($this->position - $this->grid);
+    }
+
+    protected function getPositionDiffSymbol()
+    {
+        if ($this->hasLostPositions()) {
+            return '▼';
+        } elseif ($this->hasGainedPositions()) {
+            return '▲';
         } else {
-            return '±' . $this->getDiff($a, $b);
+            return '';
         }
-    }
-
-    protected function getDiff($a, $b)
-    {
-        return abs($a - $b);
     }
 }
