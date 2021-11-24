@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->foreignId('round_id')->constrained()->cascadeOnDelete();
             $table->foreignId('track_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['season_id', 'round_id', 'track_id']);
         });
     }
 };

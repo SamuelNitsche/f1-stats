@@ -22,6 +22,8 @@ return new class extends Migration {
             $table->string('fastest_lap_time')->nullable();
             $table->integer('fastest_lap_number')->nullable();
             $table->integer('fastest_lap_rank')->nullable();
+
+            $table->unique(['race_id', 'driver_id', 'track_id', 'round_id']);
         });
     }
 };

@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->string('q1_time');
             $table->string('q2_time')->nullable();
             $table->string('q3_time')->nullable();
+
+            $table->unique(['driver_id', 'qualification_id', 'track_id']);
         });
     }
 };
