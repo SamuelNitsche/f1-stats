@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->foreignId('driver_id')->constrained()->cascadeOnDelete();
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
 
-
             $table->unique(['season_id', 'driver_id']);
         });
     }
