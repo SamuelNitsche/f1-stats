@@ -13,6 +13,16 @@ jobs:
         dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
+    
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: f1_stats_testing
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:        
       - name: Checkout code
@@ -35,7 +45,7 @@ jobs:
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
           
       - name: Generate app key
-        run: cp .env.example .env && php artisan key:generate
+        run: cp .env.ci .env && php artisan key:generate
 
       - name: Execute tests
         run: vendor/bin/pest
