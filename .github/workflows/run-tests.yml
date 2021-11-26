@@ -33,8 +33,6 @@ jobs:
 
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-        env:
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.ACCESS_TOKEN }}"}}'
           
       - name: Generate app key
         run: cp .env.example .env && php artisan key:generate
