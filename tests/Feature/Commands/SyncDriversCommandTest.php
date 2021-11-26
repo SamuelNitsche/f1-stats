@@ -11,12 +11,12 @@ test('it can sync all drivers', function () {
     artisan(SyncDriversCommand::class)->assertExitCode(0);
 
     assertDatabaseHas(Driver::class, [
-        'slug' => 'max_verstappen'
+        'slug' => 'max_verstappen',
     ]);
     assertDatabaseHas(Driver::class, [
-        'slug' => 'hamilton'
+        'slug' => 'hamilton',
     ]);
     assertDatabaseHas(Driver::class, [
-        'slug' => 'bottas'
+        'slug' => 'bottas',
     ]);
 });

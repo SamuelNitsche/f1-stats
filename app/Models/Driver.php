@@ -53,7 +53,7 @@ class Driver extends Model
 
     public function points($season = null)
     {
-        if (!$season) {
+        if (! $season) {
             $season = Season::orderByDesc('year')->first();
         }
 

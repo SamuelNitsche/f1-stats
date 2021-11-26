@@ -9,12 +9,12 @@ return new class extends Migration {
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->string("slug")->unique();
-            $table->string("first_name");
-            $table->string("last_name");
-            $table->date("date_of_birth");
-            $table->string("nationality");
-            $table->string("wikipedia_url");
+            $table->string('slug')->unique();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('date_of_birth');
+            $table->string('nationality');
+            $table->string('wikipedia_url');
             $table->timestamps();
         });
     }

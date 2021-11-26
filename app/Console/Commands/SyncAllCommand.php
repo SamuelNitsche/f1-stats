@@ -21,7 +21,7 @@ class SyncAllCommand extends Command
     {
         $start = Carbon::parse(microtime(true));
 
-        if (!$year = $this->argument('year')) {
+        if (! $year = $this->argument('year')) {
             Artisan::call('f1:drivers:sync');
             Artisan::call('f1:tracks:sync');
             Artisan::call('f1:seasons:sync');
@@ -37,7 +37,7 @@ class SyncAllCommand extends Command
 
         $end = Carbon::parse(microtime(true));
 
-        $this->info("Finished successfully after " . $start->longAbsoluteDiffForHumans($end));
+        $this->info('Finished successfully after '.$start->longAbsoluteDiffForHumans($end));
 
         return self::SUCCESS;
     }

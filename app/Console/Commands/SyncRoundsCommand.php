@@ -38,12 +38,12 @@ class SyncRoundsCommand extends Command
         $seasons->map(function (Season $season) use ($tracks) {
             $rounds = $this->service->getAllRounds($season->year);
 
-            $rounds = collect($rounds)->map(fn($round) => [
+            $rounds = collect($rounds)->map(fn ($round) => [
                 'season_id' => $season->id,
                 'track_id' => $tracks->firstWhere('slug', $round['Circuit']['circuitId'])->id,
                 'round' => $round['round'],
                 'name' => $round['raceName'],
-                'date' => Carbon::parse($round['date'] . " " . $round['time']),
+                'date' => Carbon::parse($round['date'].' '.$round['time']),
                 'wikipedia_url' => $round['url'],
             ])->toArray();
 

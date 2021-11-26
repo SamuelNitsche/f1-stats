@@ -44,7 +44,7 @@ class SyncQualificationsCommand extends Command
                 return;
             }
 
-            $qualification = collect($apiQualification)->map(fn($apiQualification) => [
+            $qualification = collect($apiQualification)->map(fn ($apiQualification) => [
                 'season_id' => $round->season_id,
                 'round_id' => $round->id,
                 'track_id' => $tracks->firstWhere('slug', $apiQualification['Circuit']['circuitId'])->id,
@@ -52,7 +52,7 @@ class SyncQualificationsCommand extends Command
 
             $qualification = Qualification::updateOrCreate($qualification, $qualification);
 
-            $results = collect($apiQualification[0]['QualifyingResults'])->map(fn($result) => [
+            $results = collect($apiQualification[0]['QualifyingResults'])->map(fn ($result) => [
                 'driver_id' => $drivers->firstWhere('slug', $result['Driver']['driverId'])->id,
                 'track_id' => $qualification->track_id,
                 'qualification_id' => $qualification->id,

@@ -13,12 +13,12 @@ test('it can sync all tracks', function () {
     artisan(SyncTracksCommand::class)->assertExitCode(0);
 
     assertDatabaseHas(Track::class, [
-        'slug' => 'imola'
+        'slug' => 'imola',
     ]);
     assertDatabaseHas(Track::class, [
-        'slug' => 'spa'
+        'slug' => 'spa',
     ]);
     assertDatabaseHas(Track::class, [
-        'slug' => 'istanbul'
+        'slug' => 'istanbul',
     ]);
 });

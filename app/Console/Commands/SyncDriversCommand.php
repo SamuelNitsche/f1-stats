@@ -25,13 +25,13 @@ class SyncDriversCommand extends Command
     {
         $drivers = $this->service->getAllDrivers();
 
-        $drivers = collect($drivers)->map(fn($driver) => [
-            "slug" => $driver['driverId'],
-            "first_name" => $driver['givenName'],
-            "last_name" => $driver['familyName'],
-            "date_of_birth" => $driver['dateOfBirth'],
-            "nationality" => $driver['nationality'],
-            "wikipedia_url" => $driver['url'],
+        $drivers = collect($drivers)->map(fn ($driver) => [
+            'slug' => $driver['driverId'],
+            'first_name' => $driver['givenName'],
+            'last_name' => $driver['familyName'],
+            'date_of_birth' => $driver['dateOfBirth'],
+            'nationality' => $driver['nationality'],
+            'wikipedia_url' => $driver['url'],
         ])->toArray();
 
         Driver::upsert($drivers, 'slug');

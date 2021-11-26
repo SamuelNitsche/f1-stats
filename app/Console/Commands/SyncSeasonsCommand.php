@@ -26,11 +26,13 @@ class SyncSeasonsCommand extends Command
         $seasons = $this->service->getAllSeasons();
 
         $seasons = collect($seasons)->map(function ($season) {
-            if (intval($season['season']) < 2019) return [];
+            if (intval($season['season']) < 2019) {
+                return [];
+            }
 
             return [
                 'year' => $season['season'],
-                'wikipedia_url' => $season['url']
+                'wikipedia_url' => $season['url'],
             ];
         })->filter()->toArray();
 

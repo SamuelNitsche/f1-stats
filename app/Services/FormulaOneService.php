@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class FormulaOneService
 {
-    const BASE_API_URI = 'https://ergast.com/api/f1';
+    public const BASE_API_URI = 'https://ergast.com/api/f1';
 
     public function getAllSeasons()
     {
@@ -15,12 +15,12 @@ class FormulaOneService
 
     public function getAllRounds($season = 'current')
     {
-        return $this->request('/' . $season . '.json')['MRData']['RaceTable']['Races'];
+        return $this->request('/'.$season.'.json')['MRData']['RaceTable']['Races'];
     }
 
     public function getAllRaces($season = 'current')
     {
-        return $this->request('/' . $season . '.json')['MRData']['RaceTable']['Races'];
+        return $this->request('/'.$season.'.json')['MRData']['RaceTable']['Races'];
     }
 
     public function getLatestSession()
@@ -55,7 +55,7 @@ class FormulaOneService
     protected function request($endpoint, $headers = [])
     {
         return Http::acceptJson()
-            ->get(self::BASE_API_URI . $endpoint)
+            ->get(self::BASE_API_URI.$endpoint)
             ->throw()
             ->json();
     }
