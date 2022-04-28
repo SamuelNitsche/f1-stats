@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Circuit;
 use App\Models\Driver;
 use App\Models\Race;
 use App\Models\Season;
-use App\Models\Circuit;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -2,8 +2,8 @@
 
 use App\Console\Commands\SyncSeasonsCommand;
 use App\Console\Commands\SyncTracksCommand;
-use App\Models\Season;
 use App\Models\Circuit;
+use App\Models\Season;
 use function Pest\Laravel\artisan;
 use function Pest\Laravel\assertDatabaseHas;
 

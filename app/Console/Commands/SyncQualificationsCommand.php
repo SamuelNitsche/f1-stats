@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Circuit;
 use App\Models\Driver;
 use App\Models\Qualification;
 use App\Models\Round;
 use App\Models\Season;
-use App\Models\Circuit;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 
