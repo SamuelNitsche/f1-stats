@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Track;
+use App\Models\Circuit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TrackFactory extends Factory
@@ -12,7 +12,7 @@ class TrackFactory extends Factory
      *
      * @var string
      */
-    protected $model = Track::class;
+    protected $model = Circuit::class;
 
     /**
      * Define the model's default state.

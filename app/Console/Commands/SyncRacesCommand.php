@@ -6,7 +6,7 @@ use App\Models\Driver;
 use App\Models\Race;
 use App\Models\Round;
 use App\Models\Season;
-use App\Models\Track;
+use App\Models\Circuit;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 
@@ -27,7 +27,7 @@ class SyncRacesCommand extends Command
 
     public function handle()
     {
-        $tracks = Track::all();
+        $tracks = Circuit::all();
         $drivers = Driver::all();
         $roundsQuery = Round::query()->with('season');
 

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Track;
+use App\Models\Circuit;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 
@@ -37,7 +37,7 @@ class SyncTracksCommand extends Command
             ];
         })->toArray();
 
-        Track::upsert($tracks, 'trackid');
+        Circuit::upsert($tracks, 'trackid');
 
         return Command::SUCCESS;
     }

@@ -48,7 +48,7 @@ class Driver extends Model
 
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return "{$this->forename} {$this->surname}";
     }
 
     public function points($season = null)

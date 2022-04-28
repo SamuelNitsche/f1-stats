@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Driver;
 use App\Models\Round;
 use App\Models\Season;
-use App\Models\Track;
+use App\Models\Circuit;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 

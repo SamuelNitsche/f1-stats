@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,31 +18,38 @@ class Race extends Model
 
     public function season()
     {
-        return $this->belongsTo(Season::class);
+        return $this->belongsTo(Season::class, 'year', 'year');
     }
 
-    public function track()
+    public function circuit()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsTo(Circuit::class, 'circuitId', 'circuitId');
     }
 
-    public function drivers()
+    public function results()
     {
-        return $this->belongsToMany(Driver::class)
-            ->using(DriverRace::class)
-            ->orderBy('position')
-            ->withPivot([
-                'position',
-                'grid',
-                'status',
-                'laps',
-                'points',
-                'total_time_millis',
-                'total_time',
-                'fastest_lap_time',
-                'fastest_lap_number',
-                'fastest_lap_rank',
-            ]);
+        return $this->hasMany(Result::class, 'raceId', 'raceId')
+            ->orderByRaw('ISNULL(position), position ASC');
+    }
+
+    public function standings()
+    {
+        return $this->hasMany(DriverStanding::class, 'raceId', 'raceId')
+            ->orderBy('position');
+    }
+
+    public function scopePrevious(Builder $query)
+    {
+        return $query
+            ->where('date', '<=', now())
+            ->orderByDesc('date');
+    }
+
+    public function scopeUpcoming(Builder $query)
+    {
+        return $query
+            ->where('date', '>=', now())
+            ->orderBy('date');
     }
 
     public function winner()

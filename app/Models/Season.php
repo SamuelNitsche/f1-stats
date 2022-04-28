@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class Season extends Model
 {
@@ -15,9 +14,9 @@ class Season extends Model
         'wikipedia_url',
     ];
 
-    public function rounds()
+    public function races()
     {
-        return $this->hasMany(Round::class)->orderBy('round');
+        return $this->hasMany(Race::class, 'year', 'year')->orderBy('round');
     }
 
     public function drivers()
@@ -27,14 +26,21 @@ class Season extends Model
 
     public function getStandings()
     {
-        return Cache::remember("standings-{$this->year}", now()->addMinutes(10), function () {
-            return $this
-                ->drivers()
-                ->with('races')
-                ->get()
-                ->sortByDesc(function (Driver $driver) {
-                    return $driver->points($this);
-                });
+        return DriverStanding::query()
+            ->with('driver')
+            ->where('raceId', $this->races->last()->raceId)
+            ->orderByDesc('points')
+            ->get();
+    }
+
+    public function hasEnded()
+    {
+        $this->races->each(function (Race $race) {
+            if (! $race->winner) {
+                return false;
+            }
         });
+
+        return true;
     }
 }

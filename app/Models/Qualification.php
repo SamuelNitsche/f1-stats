@@ -30,7 +30,7 @@ class Qualification extends Model
 
     public function track()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsTo(Circuit::class);
     }
 
     public function season()

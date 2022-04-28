@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Round;
 use App\Models\Season;
-use App\Models\Track;
+use App\Models\Circuit;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -27,7 +27,7 @@ class SyncRoundsCommand extends Command
     public function handle()
     {
         $seasonsQuery = Season::query();
-        $tracks = Track::all();
+        $tracks = Circuit::all();
 
         if ($year = $this->argument('year')) {
             $seasons = $seasonsQuery->where('year', $year)->get();

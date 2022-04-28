@@ -6,12 +6,12 @@
     <a href="{{ route('seasons.show', $round->season) }}">Back to season</a>
 
     <p>GP Name: {{ $round->name }}</p>
-    <p>Track Name: {{ $round->track->name  }}</p>
+    <p>Track Name: {{ $round->circuit->name  }}</p>
     @if ($round->race && $lap = $round->race->fastestLap)
         <p>Fastest Lap: {{ $lap->fastest_lap_time }} <a href="{{ $lap->driver->getLink() }}">({{ $lap->driver->full_name }})</a></p>
     @endif
 
-    @if ($round->race)
+    @if ($round->results)
         <h4>Race</h4>
 
         <table style="text-align: left;">
@@ -28,28 +28,28 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($round->race->drivers as $driver)
+            @foreach($round->results()->with(['driver', 'status'])->get() as $result)
                 <tr>
                     <td>
-                        <span class="mr-2">{{ $driver->pivot->position }}</span>
+                        <span class="mr-2">{{ $result->position }}</span>
 
-                        @if ($driver->pivot->hasChangedPosition())
-                            {{ $driver->pivot->getPositionDiff() }}
+{{--                        @if ($driver->pivot->hasChangedPosition())--}}
+{{--                            {{ $driver->pivot->getPositionDiff() }}--}}
 
-                            @if ($driver->pivot->hasLostPositions())
-                                <span class="text-red-600">▼</span>
-                            @elseif ($driver->pivot->hasGainedPositions())
-                                <span class="text-green-600">▲</span>
-                            @endif
-                        @endif
+{{--                            @if ($driver->pivot->hasLostPositions())--}}
+{{--                                <span class="text-red-600">▼</span>--}}
+{{--                            @elseif ($driver->pivot->hasGainedPositions())--}}
+{{--                                <span class="text-green-600">▲</span>--}}
+{{--                            @endif--}}
+{{--                        @endif--}}
                     </td>
-                    <td>{{ $driver->full_name }}</td>
-                    <td>{{ $driver->pivot->grid }}</td>
-                    <td>{{ $driver->pivot->total_time }}</td>
-                    <td>{{ $driver->pivot->status }}</td>
-                    <td>{{ $driver->pivot->laps }}</td>
-                    <td>{{ $driver->pivot->fastest_lap_time }}</td>
-                    <td>{{ $driver->pivot->points }}</td>
+                    <td>{{ $result->driver->full_name }}</td>
+                    <td>{{ $result->grid }}</td>
+                    <td>{{ $result->time }}</td>
+                    <td>{{ $result->status->status }}</td>
+                    <td>{{ $result->laps }}</td>
+                    <td>{{ $result->fastest_lap_time }}</td>
+                    <td>{{ $result->points }}</td>
                 </tr>
             @endforeach
             </tbody>

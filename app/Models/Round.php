@@ -14,20 +14,6 @@ class Round extends Model
         'date',
     ];
 
-    public function scopePrevious(Builder $query)
-    {
-        return $query
-            ->where('date', '<=', now())
-            ->orderByDesc('date');
-    }
-
-    public function scopeUpcoming(Builder $query)
-    {
-        return $query
-            ->where('date', '>=', now())
-            ->orderBy('date');
-    }
-
     public function season()
     {
         return $this->belongsTo(Season::class);
@@ -35,7 +21,7 @@ class Round extends Model
 
     public function track()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsTo(Circuit::class);
     }
 
     public function qualification()

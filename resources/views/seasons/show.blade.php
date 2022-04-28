@@ -20,10 +20,10 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($season->getStandings() as $driver)
+        @foreach ($season->getStandings() as $standing)
             <tr>
-                <td>{{ $driver->full_name }}</td>
-                <td>{{ $driver->points($season) }}</td>
+                <td>{{ $standing->driver->full_name }}</td>
+                <td>{{ $standing->points }}</td>
             </tr>
         @endforeach
         </tbody>
@@ -31,10 +31,10 @@
 
     <br>
 
-    @foreach ($season->rounds()->with('track')->get() as $round)
+    @foreach ($season->races()->with('circuit')->get() as $race)
         <p>
-            <a href="{{ route('rounds.show', [$season, $round->round]) }}">#{{$round->round}} &mdash;
-                {{ $round->name }} &mdash; {{ $round->track->name }}</a>
+            <a href="{{ route('rounds.show', [$season, $race]) }}">#{{$race->round}} &mdash;
+                {{ $race->name }} &mdash; {{ $race->circuit->name }}</a>
         </p>
     @endforeach
 @endsection

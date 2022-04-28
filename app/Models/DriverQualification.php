@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class DriverQualification extends Pivot
 {
-    public function scopeForTrack(Builder $query, Track $track)
+    public function scopeForTrack(Builder $query, Circuit $track)
     {
         return $query->where('track_id', $track->id);
     }

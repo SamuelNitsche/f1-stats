@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Driver;
-use App\Models\Round;
+use App\Models\Race;
 use App\Models\Season;
-use App\Models\Track;
+use App\Models\Circuit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $currentSeason = Season::where('year', now()->year)->first();
-    $previousRound = Round::previous()->first();
-    $upcomingRound = Round::upcoming()->first();
+    $currentSeason = Season::with('races.winner')->latest('year')->first();
+    $previousRound = Race::previous()->first();
+    $upcomingRound = Race::upcoming()->first();
 
     return view('home', [
         'currentSeason' => $currentSeason,
@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 Route::get('/seasons', function () {
     return view('seasons.index', [
-        'seasons' => Season::all(),
+        'seasons' => Season::orderByDesc('year')->get(),
     ]);
 })->name('seasons.index');
 
@@ -41,9 +41,9 @@ Route::get('/seasons/{season:year}', function (Season $season) {
     ]);
 })->name('seasons.show');
 
-Route::get('/seasons/{season:year}/{round:round}', function (Season $season, Round $round) {
+Route::get('/seasons/{season:year}/{race:round}', function (Season $season, Race $race) {
     return view('rounds.show', [
-        'round' => $round,
+        'round' => $race,
     ]);
 })->name('rounds.show');
 
@@ -61,11 +61,11 @@ Route::get('/drivers/{driver:slug}', function (Driver $driver) {
 
 Route::get('/tracks', function () {
     return view('tracks.index', [
-        'tracks' => Track::orderBy('name')->get(),
+        'tracks' => Circuit::orderBy('name')->get(),
     ]);
 })->name('tracks.index');
 
-Route::get('/tracks/{track:slug}', function (Track $track) {
+Route::get('/tracks/{track:slug}', function (Circuit $track) {
     return view('tracks.show', [
         'track' => $track->load('rounds.season', 'rounds.qualification.drivers', 'rounds.race.drivers'),
     ]);
