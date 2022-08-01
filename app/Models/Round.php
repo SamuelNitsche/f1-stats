@@ -10,8 +10,8 @@ class Round extends Model
 {
     use HasFactory;
 
-    protected $dates = [
-        'date',
+    protected $casts = [
+        'date' => 'datetime',
     ];
 
     public function season()
