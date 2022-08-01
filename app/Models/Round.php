@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Round extends Model
 {
     use HasFactory;
+
     protected $casts = [
         'date' => 'datetime',
     ];
