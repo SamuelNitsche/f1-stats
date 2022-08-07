@@ -10,9 +10,16 @@ class Race extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'raceId';
+
     protected $casts = [
         'date' => 'date'
     ];
+
+    public function circuit()
+    {
+        return $this->belongsTo(Circuit::class, 'circuitId', 'circuitId');
+    }
 
     public function season()
     {
@@ -28,6 +35,14 @@ class Race extends Model
     public function scopeUpcoming(Builder $query)
     {
         return $this
-            ->where('date', '>=', now());
+            ->where('date', '>=', now())
+            ->orderBy('date', 'asc');
+    }
+
+    public function scopePrevious(Builder $query)
+    {
+        return $this
+            ->where('date', '<', now())
+            ->orderBy('date', 'desc');
     }
 }

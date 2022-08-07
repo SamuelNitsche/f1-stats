@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $currentSeason = Season::with('races')->latest('year')->first();
-//    $previousRound = Race::previous()->first();
+    $previousRound = Race::previous()->first();
     $upcomingRound = Race::upcoming()->first();
 
     return view('home', [
         'currentSeason' => $currentSeason,
-//        'previousRound' => $previousRound,
+        'previousRound' => $previousRound,
         'upcomingRound' => $upcomingRound,
     ]);
 })->name('home');
@@ -53,7 +53,7 @@ Route::get('/drivers', function () {
     ]);
 })->name('drivers.index');
 
-Route::get('/drivers/{driver:slug}', function (Driver $driver) {
+Route::get('/drivers/{driver:driverRef}', function (Driver $driver) {
     return view('drivers.show', [
         'driver' => $driver->load('seasons'),
     ]);
