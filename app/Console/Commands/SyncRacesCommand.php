@@ -47,7 +47,7 @@ class SyncRacesCommand extends Command
             $race = collect($apiRace)->map(fn ($apiRace) => [
                 'season_id' => $round->season_id,
                 'round_id' => $round->id,
-                'track_id' => $tracks->firstWhere('slug', $apiRace['Circuit']['circuitId'])->id,
+                'circuit_id' => $tracks->firstWhere('slug', $apiRace['Circuit']['circuitId'])->id,
             ])->first();
 
             $race = Race::updateOrCreate($race, $race);
@@ -55,7 +55,7 @@ class SyncRacesCommand extends Command
             $results = collect($apiRace[0]['Results'])->map(fn ($result) => [
                 'driver_id' => $drivers->firstWhere('slug', $result['Driver']['driverId'])->id,
                 'round_id' => $round->id,
-                'track_id' => $race->track_id,
+                'circuit_id' => $race->track_id,
                 'race_id' => $race->id,
                 'position' => $result['position'],
                 'grid' => $result['grid'],

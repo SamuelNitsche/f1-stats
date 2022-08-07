@@ -40,14 +40,14 @@ class SyncRoundsCommand extends Command
 
             $rounds = collect($rounds)->map(fn ($round) => [
                 'season_id' => $season->id,
-                'track_id' => $tracks->firstWhere('slug', $round['Circuit']['circuitId'])->id,
+                'circuit_id' => $tracks->firstWhere('slug', $round['Circuit']['circuitId'])->id,
                 'round' => $round['round'],
                 'name' => $round['raceName'],
                 'date' => Carbon::parse($round['date'].' '.$round['time']),
                 'wikipedia_url' => $round['url'],
             ])->toArray();
 
-            Round::upsert($rounds, ['season_id', 'round', 'track_id', 'name']);
+            Round::upsert($rounds, ['season_id', 'round', 'circuit_id', 'name']);
         });
 
         return Command::SUCCESS;

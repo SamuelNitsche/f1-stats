@@ -11,11 +11,13 @@
 |
 */
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
 uses(Tests\TestCase::class)->in('Feature', 'Unit');
-uses(LazilyRefreshDatabase::class)->in('Feature');
+//uses(RefreshDatabase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -411,4 +413,9 @@ function seedDrivers()
     fakeFormulaOneApi();
 
     test()->artisan(\App\Console\Commands\SyncDriversCommand::class);
+}
+
+function seedDatabase() {
+    $sql_dump = File::get(base_path('tests/fixtures/f1db.sql'));
+    DB::statement($sql_dump);
 }

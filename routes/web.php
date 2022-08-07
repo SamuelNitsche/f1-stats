@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $currentSeason = Season::with('races.winner')->latest('year')->first();
-    $previousRound = Race::previous()->first();
+    $currentSeason = Season::with('races')->latest('year')->first();
+//    $previousRound = Race::previous()->first();
     $upcomingRound = Race::upcoming()->first();
 
     return view('home', [
         'currentSeason' => $currentSeason,
-        'previousRound' => $previousRound,
+//        'previousRound' => $previousRound,
         'upcomingRound' => $upcomingRound,
     ]);
 })->name('home');

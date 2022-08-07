@@ -37,7 +37,7 @@ class SyncTracksCommand extends Command
             ];
         })->toArray();
 
-        Circuit::upsert($tracks, 'trackid');
+        Circuit::upsert($tracks, 'circuit_id');
 
         return Command::SUCCESS;
     }
