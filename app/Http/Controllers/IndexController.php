@@ -18,6 +18,5 @@ class IndexController extends Controller
             'previousRound' => $previousRound,
             'upcomingRound' => $upcomingRound,
         ]);
-
     }
 }
