@@ -13,7 +13,7 @@ jobs:
         dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
-    
+
     services:
       mysql:
         image: mysql:8.0
@@ -24,7 +24,7 @@ jobs:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    steps:        
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -43,12 +43,12 @@ jobs:
 
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-          
+
       - name: Generate app key
         run: cp .env.ci .env && php artisan key:generate
-        
+
       - name: Populate database
-        run: mysql -h 127.0.0.1 -uroot -ppassword f1_stats_testing < ./tests/fixtures/f1db.sql
+        run: mysql -h mysql -uroot -ppassword f1_stats_testing < ./tests/fixtures/f1db.sql
 
       - name: Execute tests
         run: vendor/bin/pest
