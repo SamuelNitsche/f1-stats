@@ -3,60 +3,16 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class FormulaOneService
 {
-    public const BASE_API_URI = 'https://ergast.com/api/f1';
+    public const DOWNLOAD_URL = 'http://ergast.com/downloads/f1db.sql.gz';
 
-    public function getAllSeasons()
+    public function getDatabase(): string
     {
-        return $this->request('/seasons.json?limit=300')['MRData']['SeasonTable']['Seasons'];
-    }
+        $file = Http::get(self::DOWNLOAD_URL)->body();
 
-    public function getAllRounds($season = 'current')
-    {
-        return $this->request('/'.$season.'.json')['MRData']['RaceTable']['Races'];
-    }
-
-    public function getAllRaces($season = 'current')
-    {
-        return $this->request('/'.$season.'.json')['MRData']['RaceTable']['Races'];
-    }
-
-    public function getLatestSession()
-    {
-        return $this->request('/current/last/results.json')['MRData']['RaceTable']['Races'];
-    }
-
-    public function getQualification($season, $round)
-    {
-        return $this->request("/{$season}/{$round}/qualifying.json")['MRData']['RaceTable']['Races'];
-    }
-
-    public function getRace($season, $round)
-    {
-        return $this->request("/{$season}/{$round}/results.json")['MRData']['RaceTable']['Races'];
-    }
-
-    public function getAllTracks()
-    {
-        return $this->request('/circuits.json?limit=300')['MRData']['CircuitTable']['Circuits'];
-    }
-
-    public function getAllDrivers($year = null)
-    {
-        if ($year) {
-            return $this->request("/{$year}/drivers.json?limit=1000")['MRData']['DriverTable']['Drivers'];
-        }
-
-        return $this->request('/drivers.json?limit=1000')['MRData']['DriverTable']['Drivers'];
-    }
-
-    protected function request($endpoint, $headers = [])
-    {
-        return Http::acceptJson()
-            ->get(self::BASE_API_URI.$endpoint)
-            ->throw()
-            ->json();
+        return Storage::put('f1-database.sql.gz', $file);
     }
 }
