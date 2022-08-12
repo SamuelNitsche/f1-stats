@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Model::preventLazyLoading(! $this->app->isProduction());
+        Model::unguard();
+//        Model::preventLazyLoading(! $this->app->isProduction());
     }
 }

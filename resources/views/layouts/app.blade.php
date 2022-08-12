@@ -10,11 +10,17 @@
 </head>
 <body class="max-w-full p-0">
 <nav class="bg-red-600 p-3">
-    <div class="mx-auto max-w-max">
-        <a class="text-white visited:text-white" href="{{ route('home') }}">Home</a>
-        <a class="text-white visited:text-white" href="{{ route('seasons.index') }}">Seasons</a>
-        <a class="text-white visited:text-white" href="{{ route('drivers.index') }}">Drivers</a>
-        <a class="text-white visited:text-white" href="{{ route('tracks.index') }}">Tracks</a>
+    <div class="flex justify-between mx-auto max-w-4xl">
+        <div>
+
+        </div>
+
+        <div>
+            <a class="text-white visited:text-white" href="{{ route('home') }}">Home</a>
+            <a class="text-white visited:text-white" href="{{ route('seasons.index') }}">Seasons</a>
+            <a class="text-white visited:text-white" href="{{ route('drivers.index') }}">Drivers</a>
+            <a class="text-white visited:text-white" href="{{ route('circuits.index') }}">Tracks</a>
+        </div>
     </div>
 </nav>
 <main class="max-w-4xl w-full mx-auto">

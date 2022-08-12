@@ -11,38 +11,42 @@
     @endforeach
 
     <h4>Race results</h4>
-    <table style="text-align: left;">
-        <thead>
-        <tr>
-            <th>Season</th>
-            <th>Track</th>
-            <th>Position</th>
-            <th>Points</th>
-            <th>Fastest lap</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($driver->races()->with('season', 'track')->latest()->get() as $race)
-            <tr>
-                <td>
-                    {{ $race->season->year }}
-                </td>
-                <td>
-                    {{ $race->track->name }}
-                </td>
-                <td>
-                    {{ $race->pivot->position }}
-                </td>
-                <td>
-                    {{ $race->pivot->points }}
-                </td>
-                <td>
-                    {{ $race->pivot->fastest_lap_time }}
-                </td>
-            </tr>
+        @foreach($driver->results()->with('season', 'race.circuit')->latest('raceId')->get()->groupBy('season.year') as $season => $results)
+            {{ $season }}
+
+            <table style="text-align: left;">
+                <thead>
+                <tr>
+                    <th>Season</th>
+                    <th>Race</th>
+                    <th>Position</th>
+                    <th>Points</th>
+                    <th>Fastest lap</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach ($results as $result)
+                        <tr>
+                            <td>
+                                {{ $result->season->year }}
+                            </td>
+                            <td>
+                                {{ $result->race->name }}
+                            </td>
+                            <td>
+                                {{ $result->position }}
+                            </td>
+                            <td>
+                                {{ $result->points }}
+                            </td>
+                            <td>
+                                {{ $result->fastestLapTime }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @endforeach
-        </tbody>
-    </table>
 
     <h4>Qualifying results</h4>
     <table style="text-align: left;">
@@ -57,25 +61,25 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($driver->qualifications()->with('season', 'track')->latest()->get() as $qualification)
+        @foreach($driver->qualifications()->with('season', 'circuit')->latest('raceId')->get() as $qualification)
             <tr>
                 <td>
                     {{ $qualification->season->year }}
                 </td>
                 <td>
-                    {{ $qualification->track->name }}
+                    {{ $qualification->circuit->name }}
                 </td>
                 <td>
-                    {{ $qualification->pivot->position }}
+                    {{ $qualification->po }}
                 </td>
                 <td>
-                    {{ $qualification->pivot->q1_time ?? 'N/A' }}
+                    {{ $qualification->q1 ?? 'N/A' }}
                 </td>
                 <td>
-                    {{ $qualification->pivot->q2_time ?? 'N/A' }}
+                    {{ $qualification->q2 ?? 'N/A' }}
                 </td>
                 <td>
-                    {{ $qualification->pivot->q3_time ?? 'N/A' }}
+                    {{ $qualification->q3 ?? 'N/A' }}
                 </td>
             </tr>
         @endforeach

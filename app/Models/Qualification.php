@@ -2,39 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Znck\Eloquent\Traits\BelongsToThrough;
 
 class Qualification extends Model
 {
-    use HasFactory;
+    use BelongsToThrough;
 
-    protected $fillable = [
-        'season_id',
-        'round_id',
-        'track_id',
-    ];
+    protected $table = 'qualifying';
 
-    public function drivers()
+    protected $primaryKey = 'qualifyId';
+
+    public function race()
     {
-        return $this->belongsToMany(Driver::class)
-            ->using(DriverQualification::class)
-            ->orderBy('position')
-            ->withPivot([
-                'position',
-                'q1_time',
-                'q2_time',
-                'q3_time',
-            ]);
-    }
-
-    public function track()
-    {
-        return $this->belongsTo(Circuit::class);
+        return $this->belongsTo(Race::class, 'raceId');
     }
 
     public function season()
     {
-        return $this->belongsTo(Season::class);
+        return $this->belongsToThrough(Season::class, Race::class, null, '', [
+            Season::class => 'year',
+            Race::class => 'raceId',
+        ]);
+    }
+
+    public function circuit()
+    {
+        return $this->belongsToThrough(Circuit::class, Race::class, null, '', [
+            Circuit::class => 'circuitId',
+            Race::class => 'raceId',
+        ]);
     }
 }

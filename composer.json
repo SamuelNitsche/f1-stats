@@ -13,7 +13,9 @@
         "laravel/framework": "^9.22",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7",
-        "spatie/laravel-remote": "^1.2"
+        "spatie/laravel-remote": "^1.2",
+        "staudenmeir/belongs-to-through": "^2.5",
+        "staudenmeir/eloquent-has-many-deep": "^1.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

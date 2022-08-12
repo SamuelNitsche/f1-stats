@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Circuit;
-use App\Models\Driver;
-use App\Models\Race;
-use App\Models\Season;
+use App\Http\Controllers\CircuitsController;
+use App\Http\Controllers\DriversController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\RacesController;
+use App\Http\Controllers\SeasonsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,56 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $currentSeason = Season::with('races.winner')->latest('year')->first();
-    $previousRound = Race::previous()->first();
-    $upcomingRound = Race::upcoming()->first();
+Route::get('/', IndexController::class)->name('home');
 
-    return view('home', [
-        'currentSeason' => $currentSeason,
-        'previousRound' => $previousRound,
-        'upcomingRound' => $upcomingRound,
-    ]);
-})->name('home');
+Route::prefix('seasons')->group(function () {
+    Route::get('/', [SeasonsController::class, 'index'])->name('seasons.index');
+    Route::get('/{season:year}', [SeasonsController::class, 'show'])->name('seasons.show');
+    Route::get('/seasons/{season:year}/{race:round}', [RacesController::class, 'index'])->name('rounds.show');
+});
 
-Route::get('/seasons', function () {
-    return view('seasons.index', [
-        'seasons' => Season::orderByDesc('year')->get(),
-    ]);
-})->name('seasons.index');
+Route::prefix('drivers')->group(function () {
+    Route::get('/', [DriversController::class, 'index'])->name('drivers.index');
+    Route::get('/{driver:driverRef}', [DriversController::class, 'show'])->name('drivers.show');
+});
 
-Route::get('/seasons/{season:year}', function (Season $season) {
-    return view('seasons.show', [
-        'season' => $season,
-    ]);
-})->name('seasons.show');
+Route::prefix('circuits')->group(function () {
+    Route::get('/', [CircuitsController::class, 'index'])->name('circuits.index');
+    Route::get('/circuits/{circuit:circuitRef}', [CircuitsController::class, 'show'])->name('circuits.show');
+});
 
-Route::get('/seasons/{season:year}/{race:round}', function (Season $season, Race $race) {
-    return view('rounds.show', [
-        'round' => $race,
-    ]);
-})->name('rounds.show');
-
-Route::get('/drivers', function () {
-    return view('drivers.index', [
-        'drivers' => Driver::all(),
-    ]);
-})->name('drivers.index');
-
-Route::get('/drivers/{driver:slug}', function (Driver $driver) {
-    return view('drivers.show', [
-        'driver' => $driver->load('seasons'),
-    ]);
-})->name('drivers.show');
-
-Route::get('/tracks', function () {
-    return view('tracks.index', [
-        'tracks' => Circuit::orderBy('name')->get(),
-    ]);
-})->name('tracks.index');
-
-Route::get('/tracks/{track:slug}', function (Circuit $track) {
-    return view('tracks.show', [
-        'track' => $track->load('rounds.season', 'rounds.qualification.drivers', 'rounds.race.drivers'),
-    ]);
-})->name('tracks.show');
