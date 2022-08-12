@@ -13,7 +13,7 @@ class Race extends Model
     protected $primaryKey = 'raceId';
 
     protected $casts = [
-        'date' => 'date'
+        'date' => 'date',
     ];
 
     public function circuit()
