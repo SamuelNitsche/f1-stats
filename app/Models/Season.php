@@ -25,6 +25,7 @@ class Season extends Model
     {
         $latestRaceOfSeason = $this
             ->races()
+            ->whereHas('results')
             ->reorder('round', 'desc')
             ->first();
 
