@@ -13,7 +13,7 @@ class Race extends Model
     protected $primaryKey = 'raceId';
 
     protected $casts = [
-        'date' => 'date',
+        'date' => 'date:Y-m-d',
     ];
 
     public function circuit()
@@ -44,5 +44,10 @@ class Race extends Model
         return $this
             ->where('date', '<', now())
             ->orderBy('date', 'desc');
+    }
+
+    public function getDate()
+    {
+        return "{$this->date->format('Y-m-d')} {$this->time}";
     }
 }

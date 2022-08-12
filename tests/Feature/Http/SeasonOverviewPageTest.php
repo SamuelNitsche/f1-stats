@@ -3,10 +3,9 @@
 use App\Models\Season;
 use function Pest\Laravel\get;
 
-it('displays all seasons', function () {
-    $seasons = Season::latest('year')->pluck('year')->toArray();
+it('redirects to the latest version', function () {
+    $year = Season::latest('year')->first()->year;
 
     get('/seasons')
-        ->assertOk()
-        ->assertSeeInOrder($seasons);
+        ->assertRedirect("/seasons/{$year}");
 });

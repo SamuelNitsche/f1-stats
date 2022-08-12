@@ -8,9 +8,9 @@ class SeasonsController extends Controller
 {
     public function index()
     {
-        return view('seasons.index', [
-            'seasons' => Season::orderByDesc('year')->get(),
-        ]);
+        $latestSeason = Season::orderByDesc('year')->first();
+
+        return redirect()->route('seasons.show', $latestSeason);
     }
 
     public function show(Season $season)

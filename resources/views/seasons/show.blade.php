@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
-@section('title', $season->year)
+@section('title', "Season $season->year Overview")
 
 @section('content')
-    <p><a href="{{ route('seasons.index') }}">Back to all seasons</a></p>
-
-    <br>
+    <div x-data="seasonSelect()" x-init="watch()" >
+        <select x-model="season">
+            @foreach(\App\Models\Season::latest('year')->get() as $tmpSeason)
+                <option value="{{ $tmpSeason->year }}">{{ $tmpSeason->year }}</option>
+            @endforeach
+        </select>
+    </div>
 
     <p>{{ $season->year }}</p>
 
@@ -38,3 +42,19 @@
         </p>
     @endforeach
 @endsection
+
+@push('scripts')
+    <script>
+        function seasonSelect() {
+            return {
+                season: @json($season->year),
+
+                watch() {
+                    this.$watch('season', () => {
+                        window.location = '/seasons/' + this.season
+                    })
+                }
+            }
+        }
+    </script>
+@endpush
