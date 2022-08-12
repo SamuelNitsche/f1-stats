@@ -21,7 +21,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: f1_stats_testing
         ports:
-          - 33306:3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -48,7 +48,7 @@ jobs:
         run: cp .env.ci .env && php artisan key:generate
 
       - name: Populate database
-        run: mysql -h127.0.0.1 -uroot -ppassword f1_stats_testing < ./tests/fixtures/f1db.sql
+        run: mysql -h127.0.0.1 -p3306 -uroot -ppassword f1_stats_testing < ./tests/fixtures/f1db.sql
 
       - name: Execute tests
         run: vendor/bin/pest
