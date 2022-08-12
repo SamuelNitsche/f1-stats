@@ -35,4 +35,3 @@ Route::prefix('circuits')->group(function () {
     Route::get('/', [CircuitsController::class, 'index'])->name('circuits.index');
     Route::get('/circuits/{circuit:circuitRef}', [CircuitsController::class, 'show'])->name('circuits.show');
 });
-
