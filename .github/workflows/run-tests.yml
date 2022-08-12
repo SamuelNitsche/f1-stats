@@ -48,7 +48,7 @@ jobs:
         run: cp .env.ci .env && php artisan key:generate
         
       - name: Populate database
-        run: mysql -uroot -p password f1_stats_testing < ./tests/fixtures/f1db.sql
+        run: mysql -uroot -ppassword f1_stats_testing < ./tests/fixtures/f1db.sql
 
       - name: Execute tests
         run: vendor/bin/pest
