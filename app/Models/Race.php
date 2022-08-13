@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,6 +49,6 @@ class Race extends Model
 
     public function getDate()
     {
-        return "{$this->date->format('Y-m-d')} {$this->time}";
+        return new Carbon("{$this->date->format('Y-m-d')} {$this->time}", 'UTC');
     }
 }

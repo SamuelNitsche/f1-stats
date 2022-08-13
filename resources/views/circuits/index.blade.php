@@ -3,7 +3,9 @@
 @section('title', 'Tracks')
 
 @section('content')
-    @foreach($circuits as $circuit)
-        @include('circuits._link', $circuit)
-    @endforeach
+    <div class="grid grid-cols-3 grid-rows-3 gap-3">
+        @foreach($circuits as $circuit)
+            @include('circuits._card', $circuit)
+        @endforeach
+    </div>
 @endsection
