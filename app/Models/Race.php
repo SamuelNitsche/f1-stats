@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Race extends Model
 {
@@ -56,7 +57,7 @@ class Race extends Model
 
     public function getNextSessionDate()
     {
-        $foo = collect($this->only([
+        $next = collect($this->only([
             'fp1_date',
             'fp1_time',
             'fp2_date',
@@ -69,19 +70,12 @@ class Race extends Model
             'sprint_time',
             'date',
             'time',
-        ]))->values();
-
-        $times = [
-            'fp1' => "$foo[0] $foo[1]",
-            'fp2' => "$foo[2] $foo[3]",
-            'fp3' => "$foo[4] $foo[5]",
-            'quali' => "$foo[6] $foo[7]",
-            'sprint' => "$foo[8] $foo[9]",
-            'race' => "$foo[10] $foo[11]",
-        ];
-
-        $next = collect($times)
-            ->filter(fn ($time) => !empty(trim($time)))
+        ]))
+            ->chunk(2)
+            ->map(function (Collection $entry) {
+                return "{$entry->first()} {$entry->last()}";
+            })
+            ->filter(fn ($entry) => !empty(trim($entry)))
             ->sort()
             ->first();
 
