@@ -75,7 +75,7 @@ class Race extends Model
             ->map(function (Collection $entry) {
                 return "{$entry->first()} {$entry->last()}";
             })
-            ->filter(fn ($entry) => !empty(trim($entry)))
+            ->filter(fn ($entry) => ! empty(trim($entry)))
             ->sort()
             ->first();
 
