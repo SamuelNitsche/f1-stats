@@ -20,7 +20,7 @@ class CircuitsController extends Controller
     public function show(Circuit $circuit)
     {
         return view('circuits.show', [
-            'circuit' => $circuit->load('rounds.season', 'rounds.qualification.drivers', 'rounds.race.drivers'),
+            'circuit' => $circuit->load('races.season', 'races.qualifications.driver', 'races.results.driver', 'races.results.status'),
         ]);
     }
 }

@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', $track->name)
+@section('title', $circuit->name)
 
 @section('content')
-  <p>{{ $track->name }}</p>
+  <p>{{ $circuit->name }}</p>
 
   <details>
     <summary>Seasons</summary>
-    @foreach($track->rounds as $round)
+    @foreach($circuit->races as $race)
       <details>
-        <summary>{{ $round->season->year }}</summary>
+        <summary>{{ $race->season->year }}</summary>
 
-        @if ($round->qualification)
+        @if ($race->qualifications)
           <details>
             <summary>Qualifying</summary>
 
@@ -26,13 +26,13 @@
               </tr>
               </thead>
               <tbody>
-              @foreach($round->qualification?->drivers as $driver)
+              @foreach($race->qualifications as $qualification)
                 <tr>
-                  <td>{{ $driver->pivot->position }}</td>
-                  <td>{{ $driver->full_name }}</td>
-                  <td>{{ $driver->pivot->q1_time }}</td>
-                  <td>{{ $driver->pivot->q2_time ?? 'N/A' }}</td>
-                  <td>{{ $driver->pivot->q3_time ?? 'N/A' }}</td>
+                  <td>{{ $qualification->position }}</td>
+                  <td>{{ $qualification->driver->full_name }}</td>
+                  <td>{{ $qualification->q1 ?? 'N/A' }}</td>
+                  <td>{{ $qualification->q2 ?? 'N/A' }}</td>
+                  <td>{{ $qualification->q3 ?? 'N/A' }}</td>
                 </tr>
               @endforeach
               </tbody>
@@ -40,7 +40,7 @@
           </details>
         @endif
 
-        @if ($round->race)
+        @if ($race->results)
           <details>
             <summary>Race</summary>
 
@@ -57,15 +57,15 @@
               </tr>
               </thead>
               <tbody>
-              @foreach($round->race->drivers as $driver)
+              @foreach($race->results as $result)
                 <tr>
-                  <td>{{ $driver->pivot->position }}</td>
-                  <td>{{ $driver->full_name }}</td>
-                  <td>{{ $driver->pivot->grid }}</td>
-                  <td>{{ $driver->pivot->total_time }}</td>
-                  <td>{{ $driver->pivot->status }}</td>
-                  <td>{{ $driver->pivot->laps }}</td>
-                  <td>{{ $driver->pivot->points }}</td>
+                  <td>{{ $result->position }}</td>
+                  <td>{{ $result->driver->full_name }}</td>
+                  <td>{{ $result->grid }}</td>
+                  <td>{{ $result->time }}</td>
+                  <td>{{ $result->status->status }}</td>
+                  <td>{{ $result->laps }}</td>
+                  <td>{{ $result->points }}</td>
                 </tr>
               @endforeach
               </tbody>

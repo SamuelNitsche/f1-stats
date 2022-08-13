@@ -10,12 +10,15 @@ it('renders the home page', function () {
         ->assertSee(\App\Models\Season::latest('year')->first()->year);
 });
 
-it('shows the next race', function () {
-    \Carbon\Carbon::setTestNow('2022-07-30 00:00:00');
+it('shows the next session', function () {
+    \Carbon\Carbon::setTestNow('2022-08-13 11:00:00');
+
+    // Next session date: 2022-08-26
+    // Next session time: 12:00:00 UTC
 
     $this->get('/')
         ->assertOk()
-        ->assertSee('Hungarian Grand Prix');
+        ->assertSee('13 days, 01 hours');
 });
 
 it('shows the last race', function () {

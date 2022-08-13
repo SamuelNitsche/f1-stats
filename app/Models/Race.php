@@ -13,10 +13,6 @@ class Race extends Model
 
     protected $primaryKey = 'raceId';
 
-    protected $casts = [
-        'date' => 'date:Y-m-d',
-    ];
-
     public function circuit()
     {
         return $this->belongsTo(Circuit::class, 'circuitId', 'circuitId');
@@ -30,6 +26,12 @@ class Race extends Model
     public function results()
     {
         return $this->hasMany(Result::class, 'raceId', 'raceId')
+            ->orderByRaw('ISNULL(position), position ASC');
+    }
+
+    public function qualifications()
+    {
+        return $this->hasMany(Qualification::class, 'raceId', 'raceId')
             ->orderByRaw('ISNULL(position), position ASC');
     }
 
@@ -50,5 +52,39 @@ class Race extends Model
     public function getDate()
     {
         return new Carbon("{$this->date->format('Y-m-d')} {$this->time}", 'UTC');
+    }
+
+    public function getNextSessionDate()
+    {
+        $foo = collect($this->only([
+            'fp1_date',
+            'fp1_time',
+            'fp2_date',
+            'fp2_time',
+            'fp3_date',
+            'fp3_time',
+            'quali_date',
+            'quali_time',
+            'sprint_date',
+            'sprint_time',
+            'date',
+            'time',
+        ]))->values();
+
+        $times = [
+            'fp1' => "$foo[0] $foo[1]",
+            'fp2' => "$foo[2] $foo[3]",
+            'fp3' => "$foo[4] $foo[5]",
+            'quali' => "$foo[6] $foo[7]",
+            'sprint' => "$foo[8] $foo[9]",
+            'race' => "$foo[10] $foo[11]",
+        ];
+
+        $next = collect($times)
+            ->filter(fn ($time) => !empty(trim($time)))
+            ->sort()
+            ->first();
+
+        return new Carbon($next);
     }
 }

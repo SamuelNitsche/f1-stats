@@ -18,6 +18,11 @@ class Qualification extends Model
         return $this->belongsTo(Race::class, 'raceId');
     }
 
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class, 'driverId');
+    }
+
     public function season()
     {
         return $this->belongsToThrough(Season::class, Race::class, null, '', [

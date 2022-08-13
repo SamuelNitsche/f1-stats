@@ -23,7 +23,7 @@ Route::get('/', IndexController::class)->name('home');
 Route::prefix('seasons')->group(function () {
     Route::get('/', [SeasonsController::class, 'index'])->name('seasons.index');
     Route::get('/{season:year}', [SeasonsController::class, 'show'])->name('seasons.show');
-    Route::get('/seasons/{season:year}/{race:round}', [RacesController::class, 'index'])->name('rounds.show');
+    Route::get('/{season:year}/{race:round}', [RacesController::class, 'index'])->name('rounds.show');
 });
 
 Route::prefix('drivers')->group(function () {
@@ -33,5 +33,5 @@ Route::prefix('drivers')->group(function () {
 
 Route::prefix('circuits')->group(function () {
     Route::get('/', [CircuitsController::class, 'index'])->name('circuits.index');
-    Route::get('/circuits/{circuit:circuitRef}', [CircuitsController::class, 'show'])->name('circuits.show');
+    Route::get('/{circuit:circuitRef}', [CircuitsController::class, 'show'])->name('circuits.show');
 });
