@@ -9,8 +9,8 @@ class CircuitsController extends Controller
     public function index()
     {
         $circuits = Circuit::all()
-            ->sortBy(fn(Circuit $circuit) => $circuit->name)
-            ->sortBy(fn(Circuit $circuit) => !$circuit->hasImage());
+            ->sortBy(fn (Circuit $circuit) => $circuit->name)
+            ->sortBy(fn (Circuit $circuit) => ! $circuit->hasImage());
 
         return view('circuits.index', [
             'circuits' => $circuits,
