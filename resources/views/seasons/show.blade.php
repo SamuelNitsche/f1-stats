@@ -16,7 +16,7 @@
     <br>
 
     <h2 class="text-lg">Standings</h2>
-    <table class="text-left">
+    <table class="text-left w-full">
         <thead>
         <tr>
             <th>Name</th>

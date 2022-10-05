@@ -49,7 +49,7 @@
         @endforeach
 
     <h4>Qualifying results</h4>
-    <table style="text-align: left;">
+    <table style="text-align: left;" class="w-full">
         <thead>
         <tr>
             <th>Season</th>

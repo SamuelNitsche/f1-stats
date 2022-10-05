@@ -14,7 +14,7 @@
     @if ($round->results)
         <h4>Race</h4>
 
-        <table style="text-align: left;">
+        <table style="text-align: left;" class="w-full">
             <thead>
             <tr>
                 <th>Pos</th>

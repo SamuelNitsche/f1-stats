@@ -15,7 +15,7 @@
           <details>
             <summary>Qualifying</summary>
 
-            <table style="text-align: left">
+            <table style="text-align: left" class="w-full">
               <thead>
               <tr>
                 <th>Position</th>
@@ -44,7 +44,7 @@
           <details>
             <summary>Race</summary>
 
-            <table style="text-align: left;">
+            <table style="text-align: left;" class="w-full">
               <thead>
               <tr>
                 <th>Position</th>
