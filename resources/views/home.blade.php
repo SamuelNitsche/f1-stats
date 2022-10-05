@@ -4,7 +4,7 @@
 
 @section('content')
     @if ($upcomingRound)
-        <h4 class="text-center font-bold text-xl py-8">Next Race</h4>
+        <h4 class="text-center font-bold text-xl py-8">Next Session</h4>
         <x-countdown :expires="$upcomingRound->getNextSessionDate()">
             <span class="hidden">{{ $component->days() }} days, {{ $component->hours() }} hours</span>
 
@@ -31,15 +31,13 @@
 
     <h4>Last Race</h4>
     <p>
-        <a
-            href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}"
-        >{{ $previousRound->name }}</a>
+        <a href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}">{{ $previousRound->name }}</a>
     </p>
 
-    <h1>Season {{ $currentSeason->year }}</h1>
+    <h1 class="font-bold text-lg">Season {{ $currentSeason->year }}</h1>
 
-    <h4>Current standings</h4>
-    <table class="text-left">
+    <h4 class="font-semibold text-md">Current standings</h4>
+    <table class="text-left w-full">
         <thead>
         <tr>
             <th>#</th>

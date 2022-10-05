@@ -3,13 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use Illuminate\Http\Request;
 
 class DriversController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $letter = $request->input('letter', 'A');
+
+        // Group drivers by the first letter of their last name
+        $drivers = Driver::query()
+            ->where('surname', 'like', "$letter%")
+            ->orderBy('surname')
+            ->get();
+
         return view('drivers.index', [
-            'drivers' => Driver::all(),
+            'drivers' => $drivers,
         ]);
     }
 

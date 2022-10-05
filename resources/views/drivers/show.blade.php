@@ -14,7 +14,7 @@
         @foreach($driver->results()->with('season', 'race.circuit')->latest('raceId')->get()->groupBy('season.year') as $season => $results)
             {{ $season }}
 
-            <table style="text-align: left;">
+            <table style="text-align: left;" class="w-full">
                 <thead>
                 <tr>
                     <th>Season</th>
