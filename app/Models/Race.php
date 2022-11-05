@@ -17,7 +17,7 @@ class Race extends Model
     protected $casts = [
         'date' => 'date:Y-m-d',
         'sprint_date' => 'date:Y-m-d',
-        'qualify_date' => 'date:Y-m-d'
+        'qualify_date' => 'date:Y-m-d',
     ];
 
     public function circuit()
