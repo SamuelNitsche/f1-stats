@@ -3,6 +3,54 @@
 @section('title', 'Home')
 
 @section('content')
+    <div class="flex overflow-x-scroll snap-x snap-proximity snap-mandatory">
+        @foreach ($currentSeason->races as $round)
+            @php
+                $isNext = $round->is($upcomingRound)
+            @endphp
+
+            <div @class([
+                    'block',
+                    'px-4',
+                    'py-8',
+                    'text-center',
+                    'uppercase',
+                    'italic',
+                    'snap-center',
+                    'w-2/3' => $isNext,
+                    'min-w-max' => !$isNext
+                ])>
+                <p @class([
+                    'pb-4',
+                    'font-black' => $isNext,
+                    'active' => $isNext
+                    ])
+                >
+                    {{ str_replace('Grand Prix', '', $round->name) }}
+                </p>
+
+                @if ($isNext)
+                    <div class="flex items-center justify-between text-xs not-italic normal-case w-96">
+                        <div>
+                            @if ($round->qualify_date)
+                                <p>Qualifying {{ $round->qualify_date->format('d M Y') }} {{ $round->qualify_time }}</p>
+                            @else
+                                <p>Sprint {{ $round->sprint_date->format('d M Y') }} {{ $round->sprint_time }}</p>
+                            @endif
+                        </div>
+
+                        <div>
+                            <p>Race {{ $round->date->format('d M Y') }} {{ $round->time }}</p>
+
+                        </div>
+                    </div>
+                @else
+                    <p class="block text-sm font-semibold italic">{{ $round->getDate()->format('d M Y') }}</p>
+                @endif
+            </div>
+        @endforeach
+    </div>
+
     @if ($upcomingRound)
         <h4 class="text-center font-bold text-xl py-8">Next Session</h4>
         <x-countdown :expires="$upcomingRound->getNextSessionDate()">
@@ -29,10 +77,12 @@
         </x-countdown>
     @endif
 
-    <h4>Last Race</h4>
-    <p>
-        <a href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}">{{ $previousRound->name }}</a>
-    </p>
+    @if($previousRound)
+        <h4>Last Race</h4>
+        <p>
+            <a href="{{ route('rounds.show', [$previousRound->season, $previousRound]) }}">{{ $previousRound->name }}</a>
+        </p>
+    @endif
 
     <h1 class="font-bold text-lg">Season {{ $currentSeason->year }}</h1>
 
@@ -56,3 +106,13 @@
     </table>
 
 @endsection
+
+@push('scripts')
+    <script>
+        document.querySelectorAll('.active').forEach(item => item.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "center"
+        }))
+    </script>
+@endpush
