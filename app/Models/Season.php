@@ -28,7 +28,7 @@ class Season extends Model
             ->whereHas('results')
             ->reorder('round', 'desc')
             ->first();
-        
+
         if ($latestRaceOfSeason === null) {
             return [];
         }
