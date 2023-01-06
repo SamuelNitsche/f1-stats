@@ -28,6 +28,10 @@ class Season extends Model
             ->whereHas('results')
             ->reorder('round', 'desc')
             ->first();
+        
+        if ($latestRaceOfSeason === null) {
+            return [];
+        }
 
         return DriverStandings::query()
             ->with(['driver', 'race'])
