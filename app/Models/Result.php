@@ -35,6 +35,12 @@ class Result extends Model
         return $this->belongsTo(Status::class, 'statusId', 'statusId');
     }
 
+    public function isFastestLap()
+    {
+        return $this->race->results
+            ->min('fastestLapTime') === $this->fastestLapTime;
+    }
+
     public function season()
     {
         return $this->belongsToThrough(

@@ -14,6 +14,12 @@ class Race extends Model
 
     protected $primaryKey = 'raceId';
 
+    protected $casts = [
+        'date' => 'date:Y-m-d',
+        'sprint_date' => 'date:Y-m-d',
+        'quali_date' => 'date:Y-m-d',
+    ];
+
     public function circuit()
     {
         return $this->belongsTo(Circuit::class, 'circuitId', 'circuitId');
@@ -53,6 +59,11 @@ class Race extends Model
     public function getDate()
     {
         return new Carbon("{$this->date->format('Y-m-d')} {$this->time}", 'UTC');
+    }
+
+    public function isOver()
+    {
+        return $this->getDate()->isPast();
     }
 
     public function getNextSessionDate()

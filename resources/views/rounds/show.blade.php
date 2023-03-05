@@ -5,14 +5,13 @@
 @section('content')
     <a href="{{ route('seasons.show', $round->season) }}">Back to season</a>
 
-    <p>GP Name: {{ $round->name }}</p>
-    <p>Track Name: {{ $round->circuit->name  }}</p>
-    @if ($round->race && $lap = $round->race->fastestLap)
-        <p>Fastest Lap: {{ $lap->fastest_lap_time }} <a href="{{ $lap->driver->getLink() }}">({{ $lap->driver->full_name }})</a></p>
-    @endif
+    <div class="mt-4">
+        <h1 class="font-black">{{ $round->name }}</h1>
+        <p>{{ $round->circuit->name  }}</p>
+    </div>
 
     @if ($round->results)
-        <h4>Race</h4>
+        <h4 class="font-bold mt-4">Race Results</h4>
 
         <table style="text-align: left;" class="w-full">
             <thead>
@@ -28,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($round->results()->with(['driver', 'status'])->get() as $result)
+            @foreach($round->results as $result)
                 <tr>
                     <td>
                         <span class="mr-2">{{ $result->position }}</span>
@@ -48,7 +47,10 @@
                     <td>{{ $result->time }}</td>
                     <td>{{ $result->status->status }}</td>
                     <td>{{ $result->laps }}</td>
-                    <td>{{ $result->fastest_lap_time }}</td>
+                    <td @class([
+                        'text-purple-600' => $result->isFastestLap(),
+                    ])>
+                        {{ $result->fastestLapTime }}</td>
                     <td>{{ $result->points }}</td>
                 </tr>
             @endforeach
@@ -56,10 +58,10 @@
         </table>
     @endif
 
-    @if ($round->qualification)
-        <h4>Qualifying</h4>
+    @if ($round->qualifications)
+        <h4 class="font-bold mt-8">Qualifying Results</h4>
 
-        <table style="text-align: left">
+        <table style="text-align: left" class="w-full">
             <thead>
             <tr>
                 <th>Position</th>
@@ -70,13 +72,13 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($round->qualification->drivers as $driver)
+            @foreach($round->qualifications as $qualification)
                 <tr>
-                    <td>{{ $driver->pivot->position }}</td>
-                    <td>{{ $driver->full_name }}</td>
-                    <td>{{ $driver->pivot->q1_time }}</td>
-                    <td>{{ $driver->pivot->q2_time ?? 'N/A' }}</td>
-                    <td>{{ $driver->pivot->q3_time ?? 'N/A' }}</td>
+                    <td>{{ $qualification->position }}</td>
+                    <td>{{ $qualification->driver->full_name }}</td>
+                    <td>{{ $qualification->q1 }}</td>
+                    <td>{{ $qualification->q2 ?? 'N/A' }}</td>
+                    <td>{{ $qualification->q3 ?? 'N/A' }}</td>
                 </tr>
             @endforeach
             </tbody>
