@@ -14,18 +14,18 @@
     @yield('styles')
 </head>
 
-<body class="max-w-full p-0 font-body italic">
+<body class="max-w-full p-0 font-body">
     <nav class="bg-red-600 p-3">
         <div class="flex justify-between items-center mx-auto max-w-4xl">
-            <h1 class="font-bold text-2xl text-white">
+            <h1 class="font-bold text-2xl text-white italic">
                 <a href="{{ route('home') }}">F1 STATS</a>
             </h1>
 
             <div>
-                <a class="not-italic font-bold text-white visited:text-white" href="{{ route('home') }}">Home</a>
-                <a class="not-italic font-bold text-white visited:text-white" href="{{ route('seasons.index') }}">Seasons</a>
-                <a class="not-italic font-bold text-white visited:text-white" href="{{ route('drivers.index') }}">Drivers</a>
-                <a class="not-italic font-bold text-white visited:text-white" href="{{ route('circuits.index') }}">Tracks</a>
+                <a class="font-bold text-white visited:text-white" href="{{ route('home') }}">Home</a>
+                <a class="font-bold text-white visited:text-white" href="{{ route('seasons.index') }}">Seasons</a>
+                <a class="font-bold text-white visited:text-white" href="{{ route('drivers.index') }}">Drivers</a>
+                <a class="font-bold text-white visited:text-white" href="{{ route('circuits.index') }}">Tracks</a>
             </div>
         </div>
     </nav>

@@ -25,7 +25,6 @@
                     'py-8',
                     'text-center',
                     'uppercase',
-                    'italic',
                     'border-b',
                     'h-full',
                     //'w-2/3' => $isNext,
@@ -44,7 +43,7 @@
                     </div>
 
                     @if ($isNext)
-                        <div class="flex items-center justify-between text-xs not-italic normal-case w-96">
+                        <div class="flex items-center justify-between text-xs normal-case w-96">
                             <div>
                                 @if ($round->quali_date)
                                     <p>
@@ -67,7 +66,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="block text-sm font-semibold italic">{{ $round->getDate()->format('d M Y') }}</p>
+                        <p class="block text-sm font-semibold">{{ $round->getDate()->format('d M Y') }}</p>
                     @endif
                 </div>
             @endforeach
@@ -76,7 +75,8 @@
 
 
     @if ($upcomingRound)
-        <h4 class="text-center font-bold text-xl py-8">Next Session</h4>
+        <h4 class="text-center font-bold text-xl pt-8">Next Session</h4>
+        <p class="text-center text-sm font-bold py-4">in</p>
         <x-countdown :expires="$upcomingRound->getNextSessionDate()">
             <span class="hidden">{{ $component->days() }} days, {{ $component->hours() }} hours</span>
 
