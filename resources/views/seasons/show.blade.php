@@ -11,9 +11,14 @@
         </select>
     </div>
 
-    <p>{{ $season->year }}</p>
+    <p class="font-black">{{ $season->year }} Season</p>
 
-    <br>
+    @if($season->isOver())
+        <div class="my-4">
+            <p>{{ $season->getDriverChampionshipWinner()->full_name }} won the Championship</p>
+            <p>{{ $season->getConstructorChampionshipWinner()->name }} won the Constructor Championship</p>
+        </div>
+    @endif
 
     <h2 class="text-lg">Standings</h2>
     <table class="text-left w-full">

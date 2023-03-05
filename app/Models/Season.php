@@ -39,4 +39,38 @@ class Season extends Model
             ->orderBy('position')
             ->get();
     }
+
+    public function getConstructorStandings()
+    {
+        $latestRaceOfSeason = $this
+            ->races()
+            ->whereHas('results')
+            ->reorder('round', 'desc')
+            ->first();
+
+        if ($latestRaceOfSeason === null) {
+            return [];
+        }
+
+        return ConstructorStandings::query()
+            ->with(['constructor', 'race'])
+            ->where('raceId', $latestRaceOfSeason->raceId)
+            ->orderBy('position')
+            ->get();
+    }
+
+    public function isOver(): bool
+    {
+        return $this->races->last()->date->isPast();
+    }
+
+    public function getDriverChampionshipWinner(): Driver
+    {
+        return $this->getStandings()->first()->driver;
+    }
+
+    public function getConstructorChampionshipWinner(): Constructor
+    {
+        return $this->getConstructorStandings()->first()->constructor;
+    }
 }

@@ -11,9 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,900;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    @yield('styles')
 </head>
 
-<body class="max-w-full p-0 font-body uppercase italic">
+<body class="max-w-full p-0 font-body italic">
     <nav class="bg-red-600 p-3">
         <div class="flex justify-between items-center mx-auto max-w-4xl">
             <h1 class="font-bold text-2xl text-white">
@@ -34,6 +35,13 @@
     @vite('resources/js/app.js')
     @bukScripts
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
     @stack('scripts')
 </body>
 
