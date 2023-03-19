@@ -15,9 +15,12 @@ class Race extends Model
     protected $primaryKey = 'raceId';
 
     protected $casts = [
-        'date' => 'date:Y-m-d',
-        'sprint_date' => 'date:Y-m-d',
+        'fp1_date' => 'date:Y-m-d',
+        'fp2_date' => 'date:Y-m-d',
+        'fp3_date' => 'date:Y-m-d',
         'quali_date' => 'date:Y-m-d',
+        'sprint_date' => 'date:Y-m-d',
+        'date' => 'date:Y-m-d',
     ];
 
     public function circuit()
@@ -45,7 +48,7 @@ class Race extends Model
     public function scopeUpcoming(Builder $query)
     {
         return $this
-            ->where('date', '>=', now())
+            ->where('date', '>=', now()->startOfDay())
             ->orderBy('date', 'asc');
     }
 
@@ -68,7 +71,7 @@ class Race extends Model
 
     public function getNextSessionDate()
     {
-        $next = collect($this->only([
+        return collect($this->only([
             'fp1_date',
             'fp1_time',
             'fp2_date',
@@ -84,12 +87,11 @@ class Race extends Model
         ]))
             ->chunk(2)
             ->map(function (Collection $entry) {
-                return "{$entry->first()} {$entry->last()}";
+                return "{$entry->first()?->toDateString()} {$entry->last()}";
             })
             ->filter(fn ($entry) => ! empty(trim($entry)))
             ->sort()
-            ->first();
-
-        return new Carbon($next);
+            ->map(fn ($entry) => new Carbon($entry))
+            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()->startOfDay()));
     }
 }
