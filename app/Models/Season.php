@@ -66,7 +66,7 @@ class Season extends Model
 
     public function getDriverChampionshipWinner(): Driver
     {
-        return $this->getStandings()->first()->driver;
+        return $this->getStandings()?->first()->driver;
     }
 
     public function getConstructorChampionshipWinner(): Constructor

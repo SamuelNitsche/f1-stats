@@ -3,12 +3,14 @@
 @section('title', "Season $season->year Overview")
 
 @section('content')
-    <div x-data="seasonSelect()" x-init="watch()" >
-        <select x-model="season">
-            @foreach(\App\Models\Season::latest('year')->get() as $tmpSeason)
-                <option value="{{ $tmpSeason->year }}">{{ $tmpSeason->year }}</option>
-            @endforeach
-        </select>
+    <div class="flex space-x-4 overflow-scroll my-4">
+        @foreach(\App\Models\Season::latest('year')->get() as $tmpSeason)
+            <span><a href="{{ route('seasons.show', $tmpSeason) }}"
+                @class([
+                    'font-bold' => $season->is($tmpSeason)
+                ])
+            >{{ $tmpSeason->year }}</a></span>
+        @endforeach
     </div>
 
     <p class="font-black">{{ $season->year }} Season</p>
@@ -20,23 +22,46 @@
         </div>
     @endif
 
-    <h2 class="text-lg">Standings</h2>
-    <table class="text-left w-full">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Points</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($season->getStandings() as $standing)
-            <tr>
-                <td>{{ $standing->driver->full_name }}</td>
-                <td>{{ $standing->points }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+    <div class="grid grid-cols-2">
+        <div class="">
+            @foreach($standings['podium'] as $standing)
+{{--                @dd($standing)--}}
+                <div>
+                    <span>{{ 1 + $loop->index }}</span>
+                    <span>{{ $standing->driver->full_name }}</span>
+                    <span>{{ $standing->points }}</span>
+                </div>
+            @endforeach
+        </div>
+
+        <div>
+            @foreach($standings['rest'] as $standing)
+                <div>
+                    <span>{{ 4 + $loop->index }}</span>
+                    <span>{{ $standing->driver->full_name }}</span>
+                    <span>{{ $standing->points }}</span>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+{{--    <h2 class="text-lg">Standings</h2>--}}
+{{--    <table class="text-left w-full">--}}
+{{--        <thead>--}}
+{{--        <tr>--}}
+{{--            <th>Name</th>--}}
+{{--            <th>Points</th>--}}
+{{--        </tr>--}}
+{{--        </thead>--}}
+{{--        <tbody>--}}
+{{--        @foreach ($season->getStandings() as $standing)--}}
+{{--            <tr>--}}
+{{--                <td>{{ $standing->driver->full_name }}</td>--}}
+{{--                <td>{{ $standing->points }}</td>--}}
+{{--            </tr>--}}
+{{--        @endforeach--}}
+{{--        </tbody>--}}
+{{--    </table>--}}
 
     <br>
 
@@ -47,19 +72,3 @@
         </p>
     @endforeach
 @endsection
-
-@push('scripts')
-    <script>
-        function seasonSelect() {
-            return {
-                season: @json($season->year),
-
-                watch() {
-                    this.$watch('season', () => {
-                        window.location = '/seasons/' + this.season
-                    })
-                }
-            }
-        }
-    </script>
-@endpush

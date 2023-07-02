@@ -15,8 +15,17 @@ class SeasonsController extends Controller
 
     public function show(Season $season)
     {
+        $standings = $season->getStandings();
+
+        $rest = $standings->splice(3);
+        $podium = $standings;
+
         return view('seasons.show', [
             'season' => $season,
+            'standings' => [
+                'podium' => $podium,
+                'rest' => $rest,
+            ],
         ]);
     }
 }
