@@ -92,6 +92,6 @@ class Race extends Model
             ->filter(fn ($entry) => ! empty(trim($entry)))
             ->sort()
             ->map(fn ($entry) => new Carbon($entry))
-            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()->startOfDay()));
+            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()));
     }
 }
