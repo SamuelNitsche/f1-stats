@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CircuitsController;
+use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RacesController;
@@ -23,6 +24,7 @@ Route::get('/', IndexController::class)->name('home');
 Route::prefix('seasons')->group(function () {
     Route::get('/', [SeasonsController::class, 'index'])->name('seasons.index');
     Route::get('/{season:year}', [SeasonsController::class, 'show'])->name('seasons.show');
+    Route::get('/{season:year}/compare', CompareController::class)->name('drivers.compare');
     Route::get('/{season:year}/{race:round}', [RacesController::class, 'index'])->name('rounds.show');
 });
 
