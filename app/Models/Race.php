@@ -48,7 +48,7 @@ class Race extends Model
     public function scopeUpcoming(Builder $query)
     {
         return $this
-            ->where('date', '>=', now()->startOfDay())
+            ->where('date', '>=', now()->addHours(4))
             ->orderBy('date', 'asc');
     }
 
@@ -92,6 +92,6 @@ class Race extends Model
             ->filter(fn ($entry) => ! empty(trim($entry)))
             ->sort()
             ->map(fn ($entry) => new Carbon($entry))
-            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()));
+            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()->addHours(4)));
     }
 }
