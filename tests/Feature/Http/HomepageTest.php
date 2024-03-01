@@ -7,11 +7,11 @@ it('renders the home page', function () {
 
     $this->get('/')
         ->assertOk()
-        ->assertSee(\App\Models\Season::latest('year')->first()->year);
+        ->assertSee(App\Models\Season::latest('year')->first()->year);
 });
 
 it('shows the next session', function () {
-    \Carbon\Carbon::setTestNow('2022-08-13 11:00:00');
+    Carbon\Carbon::setTestNow('2022-08-13 11:00:00');
 
     // Next session date: 2022-08-26
     // Next session time: 12:00:00 UTC
@@ -22,7 +22,7 @@ it('shows the next session', function () {
 });
 
 it('shows the last race', function () {
-    \Carbon\Carbon::setTestNow('2022-07-30 00:00:00');
+    Carbon\Carbon::setTestNow('2022-07-30 00:00:00');
 
     $this->get('/')
         ->assertOk()
@@ -30,7 +30,7 @@ it('shows the last race', function () {
 });
 
 it('shows the current standings', function () {
-    \Carbon\Carbon::setTestNow('2022-08-01 00:00:00');
+    Carbon\Carbon::setTestNow('2022-08-01 00:00:00');
 
     $this->get('/')
         ->assertOk()
