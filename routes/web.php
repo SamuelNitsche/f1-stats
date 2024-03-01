@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CircuitsController;
 use App\Http\Controllers\CompareController;
+use App\Http\Controllers\CompareDriversController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RacesController;
@@ -31,6 +32,8 @@ Route::prefix('seasons')->group(function () {
 Route::prefix('drivers')->group(function () {
     Route::get('/', [DriversController::class, 'index'])->name('drivers.index');
     Route::get('/{driver:driverRef}', [DriversController::class, 'show'])->name('drivers.show');
+
+    Route::get('/compare/{driver1}/{driver2}', [CompareDriversController::class, 'show'])->name('drivers.compare');
 });
 
 Route::prefix('circuits')->group(function () {
