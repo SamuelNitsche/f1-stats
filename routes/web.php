@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\CircuitsController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DriversController;
@@ -21,19 +23,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('home');
 
-Route::prefix('seasons')->group(function () {
+Route::prefix('seasons')->group(function (): void {
     Route::get('/', [SeasonsController::class, 'index'])->name('seasons.index');
     Route::get('/{season:year}', [SeasonsController::class, 'show'])->name('seasons.show');
     Route::get('/{season:year}/compare', CompareController::class)->name('drivers.compare');
     Route::get('/{season:year}/{race:round}', [RacesController::class, 'index'])->name('rounds.show');
 });
 
-Route::prefix('drivers')->group(function () {
+Route::prefix('drivers')->group(function (): void {
     Route::get('/', [DriversController::class, 'index'])->name('drivers.index');
     Route::get('/{driver:driverRef}', [DriversController::class, 'show'])->name('drivers.show');
 });
 
-Route::prefix('circuits')->group(function () {
+Route::prefix('circuits')->group(function (): void {
     Route::get('/', [CircuitsController::class, 'index'])->name('circuits.index');
     Route::get('/{circuit:circuitRef}', [CircuitsController::class, 'show'])->name('circuits.show');
 });

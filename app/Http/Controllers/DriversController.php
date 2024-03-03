@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
@@ -13,7 +15,7 @@ class DriversController extends Controller
 
         // Group drivers by the first letter of their last name
         $drivers = Driver::query()
-            ->where('surname', 'like', "$letter%")
+            ->where('surname', 'like', "{$letter}%")
             ->orderBy('surname')
             ->get();
 

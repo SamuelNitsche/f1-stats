@@ -15,34 +15,34 @@
 
     <p class="font-black">{{ $season->year }} Season</p>
 
-    @if($season->isOver())
-        <div class="my-4">
-            <p>{{ $season->getDriverChampionshipWinner()->full_name }} won the Championship</p>
-            <p>{{ $season->getConstructorChampionshipWinner()->name }} won the Constructor Championship</p>
-        </div>
-    @endif
+{{--    @if($season->isOver())--}}
+{{--        <div class="my-4">--}}
+{{--            <p>{{ $season->getDriverChampionshipWinner()->full_name }} won the Championship</p>--}}
+{{--            <p>{{ $season->getConstructorChampionshipWinner()->name }} won the Constructor Championship</p>--}}
+{{--        </div>--}}
+{{--    @endif--}}
 
     <div class="grid grid-cols-2">
         <div class="">
-            @foreach($standings['podium'] as $standing)
+{{--            @foreach($standings['podium'] as $standing)--}}
 {{--                @dd($standing)--}}
-                <div>
-                    <span>{{ 1 + $loop->index }}</span>
-                    <span>{{ $standing->driver->full_name }}</span>
-                    <span>{{ $standing->points }}</span>
-                </div>
-            @endforeach
-        </div>
+{{--                <div>--}}
+{{--                    <span>{{ 1 + $loop->index }}</span>--}}
+{{--                    <span>{{ $standing->driver->full_name }}</span>--}}
+{{--                    <span>{{ $standing->points }}</span>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
 
-        <div>
-            @foreach($standings['rest'] as $standing)
-                <div>
-                    <span>{{ 4 + $loop->index }}</span>
-                    <span>{{ $standing->driver->full_name }}</span>
-                    <span>{{ $standing->points }}</span>
-                </div>
-            @endforeach
-        </div>
+{{--        <div>--}}
+{{--            @foreach($standings['rest'] as $standing)--}}
+{{--                <div>--}}
+{{--                    <span>{{ 4 + $loop->index }}</span>--}}
+{{--                    <span>{{ $standing->driver->full_name }}</span>--}}
+{{--                    <span>{{ $standing->points }}</span>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
     </div>
 
 {{--    <h2 class="text-lg">Standings</h2>--}}

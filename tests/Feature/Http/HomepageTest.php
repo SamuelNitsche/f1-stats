@@ -1,17 +1,17 @@
 <?php
 
-it('renders the home page', function () {
-    \Pest\Laravel\assertDatabaseHas('seasons', [
-        'year' => '2022',
-    ]);
+declare(strict_types=1);
+
+it('renders the home page', function (): void {
+    App\Models\Season::factory()->create(['year' => 2022]);
 
     $this->get('/')
         ->assertOk()
-        ->assertSee(\App\Models\Season::latest('year')->first()->year);
+        ->assertSee(App\Models\Season::latest('year')->first()->year);
 });
 
-it('shows the next session', function () {
-    \Carbon\Carbon::setTestNow('2022-08-13 11:00:00');
+it('shows the next session', function (): void {
+    Carbon\Carbon::setTestNow('2022-08-13 11:00:00');
 
     // Next session date: 2022-08-26
     // Next session time: 12:00:00 UTC
@@ -21,16 +21,16 @@ it('shows the next session', function () {
         ->assertSee('13 days, 01 hours');
 });
 
-it('shows the last race', function () {
-    \Carbon\Carbon::setTestNow('2022-07-30 00:00:00');
+it('shows the last race', function (): void {
+    Carbon\Carbon::setTestNow('2022-07-30 00:00:00');
 
     $this->get('/')
         ->assertOk()
         ->assertSee('French Grand Prix');
 });
 
-it('shows the current standings', function () {
-    \Carbon\Carbon::setTestNow('2022-08-01 00:00:00');
+it('shows the current standings', function (): void {
+    Carbon\Carbon::setTestNow('2022-08-01 00:00:00');
 
     $this->get('/')
         ->assertOk()

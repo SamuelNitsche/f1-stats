@@ -1,97 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use LogicException;
 
 class Race extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'raceId';
-
     protected $casts = [
-        'fp1_date' => 'date:Y-m-d',
-        'fp2_date' => 'date:Y-m-d',
-        'fp3_date' => 'date:Y-m-d',
-        'quali_date' => 'date:Y-m-d',
-        'sprint_date' => 'date:Y-m-d',
-        'date' => 'date:Y-m-d',
+        'starts_at' => 'datetime',
+        'fp1_starts_at' => 'datetime',
+        'fp2_starts_at' => 'datetime',
+        'fp3_starts_at' => 'datetime',
+        'qualifying_starts_at' => 'datetime',
+        'sprint_starts_at' => 'datetime',
     ];
 
-    public function circuit()
+    public function circuit(): BelongsTo
     {
-        return $this->belongsTo(Circuit::class, 'circuitId', 'circuitId');
+        return $this->belongsTo(Circuit::class);
     }
 
-    public function season()
+    public function results(): HasMany
     {
-        return $this->belongsTo(Season::class, 'year', 'year');
+        return $this->hasMany(RaceResult::class);
     }
 
-    public function results()
+    /**
+     * @throws LogicException
+     */
+    public function isSprintRace(): bool
     {
-        return $this->hasMany(Result::class, 'raceId', 'raceId')
-            ->orderByRaw('ISNULL(position), position ASC');
-    }
+        if (null === $this->starts_at) {
+            throw new LogicException('Cannot determine if race is a sprint. No session start times available.');
+        }
 
-    public function qualifications()
-    {
-        return $this->hasMany(Qualification::class, 'raceId', 'raceId')
-            ->orderByRaw('ISNULL(position), position ASC');
-    }
-
-    public function scopeUpcoming(Builder $query)
-    {
-        return $this
-            ->where('date', '>=', now()->addHours(4))
-            ->orderBy('date', 'asc');
-    }
-
-    public function scopePrevious(Builder $query)
-    {
-        return $this
-            ->where('date', '<', now())
-            ->orderBy('date', 'desc');
-    }
-
-    public function getDate()
-    {
-        return new Carbon("{$this->date->format('Y-m-d')} {$this->time}", 'UTC');
-    }
-
-    public function isOver()
-    {
-        return $this->getDate()->isPast();
-    }
-
-    public function getNextSessionDate()
-    {
-        return collect($this->only([
-            'fp1_date',
-            'fp1_time',
-            'fp2_date',
-            'fp2_time',
-            'fp3_date',
-            'fp3_time',
-            'quali_date',
-            'quali_time',
-            'sprint_date',
-            'sprint_time',
-            'date',
-            'time',
-        ]))
-            ->chunk(2)
-            ->map(function (Collection $entry) {
-                return "{$entry->first()?->toDateString()} {$entry->last()}";
-            })
-            ->filter(fn ($entry) => ! empty(trim($entry)))
-            ->sort()
-            ->map(fn ($entry) => new Carbon($entry))
-            ->firstWhere(fn (Carbon $entry) => $entry->gte(now()->addHours(4)));
+        return null !== $this->sprint_starts_at;
     }
 }

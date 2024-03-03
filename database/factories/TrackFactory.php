@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Circuit;
@@ -22,7 +24,7 @@ class TrackFactory extends Factory
     public function definition()
     {
         return [
-            //
+
         ];
     }
 }

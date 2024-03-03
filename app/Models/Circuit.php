@@ -1,26 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Circuit extends Model
 {
-    protected $primaryKey = 'circuitId';
-
-    public function races()
+    public function races(): HasMany
     {
-        return $this->hasMany(Race::class, 'circuitId', 'circuitId')->latest('raceId');
+        return $this->hasMany(Race::class);
     }
 
-    public function hasImage(): bool
+    public function location(): BelongsTo
     {
-        return File::exists("images/circuits/{$this->circuitRef}.png");
-    }
-
-    public function getImageUrl(): string
-    {
-        return asset("images/circuits/{$this->circuitRef}.png");
+        return $this->belongsTo(Location::class);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -16,9 +18,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 uses(Tests\TestCase::class)->in('Feature', 'Unit');
-uses(RefreshDatabase::class);
+uses(RefreshDatabase::class)->in('Feature');
 
-beforeEach(function () {
+beforeEach(function (): void {
     seedDatabase();
 });
 

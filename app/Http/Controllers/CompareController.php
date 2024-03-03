@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
@@ -21,22 +23,22 @@ class CompareController extends Controller
                 ]];
             })];
         });
-//        dd($data);
-//
-//        $data = $drivers->mapWithKeys(function (Driver $driver) use ($season) {
-//            $data = $driver
-//                ->races()
-//                ->with(
-//                    ['results' => fn($query) => $query->where('driverId', $driver->driverId)],
-//                )
-//                ->with(
-//                    ['qualifications' => fn($query) => $query->where('driverId', $driver->driverId)],
-//                )
-//                ->where('year', $season->year)
-//                ->get();
-//
-//            return [$ra];
-//        });
+        //        dd($data);
+        //
+        //        $data = $drivers->mapWithKeys(function (Driver $driver) use ($season) {
+        //            $data = $driver
+        //                ->races()
+        //                ->with(
+        //                    ['results' => fn($query) => $query->where('driverId', $driver->driverId)],
+        //                )
+        //                ->with(
+        //                    ['qualifications' => fn($query) => $query->where('driverId', $driver->driverId)],
+        //                )
+        //                ->where('year', $season->year)
+        //                ->get();
+        //
+        //            return [$ra];
+        //        });
 
         return view('seasons.compare', [
             'season' => $season,

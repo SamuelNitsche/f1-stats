@@ -1,18 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
+use App\Dto\QualifyingResult;
+use App\Dto\Race;
+use App\Dto\RaceResult;
+use App\Dto\Season;
 
-class FormulaOneService
+interface FormulaOneService
 {
-    public const DOWNLOAD_URL = 'http://ergast.com/downloads/f1db.sql.gz';
+    /**
+     * @return Season[]
+     */
+    public function getSeasons(): array;
 
-    public function getDatabase(): string
-    {
-        $file = Http::get(self::DOWNLOAD_URL)->body();
+    /**
+     * @return Race[]
+     */
+    public function getRacesPerSeason(Season $season): array;
 
-        return Storage::put('f1-database.sql.gz', $file);
-    }
+    /**
+     * @return RaceResult[]
+     */
+    public function getRaceResults(Race $race): array;
+
+    /**
+     * @return QualifyingResult[]
+     */
+    public function getQualifyingResults(Race $race): array;
 }

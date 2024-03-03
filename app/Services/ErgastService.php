@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Dto\QualifyingResult;
+use App\Dto\Race;
+use App\Dto\RaceResult;
+use App\Dto\Season;
+use App\Http\Integrations\Ergast\ErgastConnector;
+use App\Http\Integrations\Ergast\Requests\GetQualifyingResultsRequest;
+use App\Http\Integrations\Ergast\Requests\GetRaceResultsRequest;
+use App\Http\Integrations\Ergast\Requests\GetRacesPerSeasonRequest;
+use App\Http\Integrations\Ergast\Requests\GetSeasonsRequest;
+
+class ErgastService implements FormulaOneService
+{
+    private ErgastConnector $connector;
+
+    public function __construct()
+    {
+        $this->connector = new ErgastConnector();
+    }
+
+    /**
+     * @return Season[]
+     */
+    public function getSeasons(): array
+    {
+        $seasons = [];
+
+        $request = new GetSeasonsRequest();
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $season) {
+            $seasons[] = new Season($season['season'], $season['url']);
+        }
+
+        return $seasons;
+    }
+
+    /**
+     * @return Season[]
+     */
+    public function getRacesPerSeason(Season $season): array
+    {
+        $races = [];
+
+        $request = new GetRacesPerSeasonRequest($season->year);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $race) {
+            $races[] = Race::from($race);
+        }
+
+        return $races;
+    }
+
+    /**
+     * @return RaceResult[]
+     */
+    public function getRaceResults(Race $race): array
+    {
+        $results = [];
+
+        $request = new GetRaceResultsRequest($race->season, $race->round);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $result) {
+            foreach ($result['Results'] as $driverResult) {
+                $results[] = RaceResult::from($driverResult);
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return QualifyingResult[]
+     */
+    public function getQualifyingResults(Race $race): array
+    {
+        $results = [];
+
+        $request = new GetQualifyingResultsRequest($race->season, $race->round);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $result) {
+            foreach ($result['QualifyingResults'] as $driverResult) {
+                $results[] = QualifyingResult::from($driverResult);
+            }
+        }
+
+        return $results;
+    }
+}
