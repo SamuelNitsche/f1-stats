@@ -26,7 +26,7 @@ class SyncF1StatsCommand extends Command
 
     public function handle(): void
     {
-        if ( ! $this->service->getDatabase()) {
+        if (! $this->service->getDatabase()) {
             $this->error('Unable to download file');
         }
 
@@ -48,7 +48,7 @@ class SyncF1StatsCommand extends Command
 
     protected function extractDatabase(): void
     {
-        exec('gunzip ' . storage_path('app/f1-database.sql.gz'));
+        exec('gunzip '.storage_path('app/f1-database.sql.gz'));
     }
 
     protected function deleteDatabaseFile(): void

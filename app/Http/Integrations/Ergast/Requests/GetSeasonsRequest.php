@@ -18,12 +18,12 @@ use Saloon\PaginationPlugin\OffsetPaginator;
 class GetSeasonsRequest extends Request implements Cacheable, Paginatable
 {
     /**
-     * The HTTP method of the request
+     * The HTTP method of the request.
      */
     protected Method $method = Method::GET;
 
     /**
-     * The endpoint for the request
+     * The endpoint for the request.
      */
     public function resolveEndpoint(): string
     {
@@ -32,8 +32,7 @@ class GetSeasonsRequest extends Request implements Cacheable, Paginatable
 
     public function paginate(Connector $connector): OffsetPaginator
     {
-        return new class(connector: $connector, request: $this) extends OffsetPaginator
-        {
+        return new class(connector: $connector, request: $this) extends OffsetPaginator {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool

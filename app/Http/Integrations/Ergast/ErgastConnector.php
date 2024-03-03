@@ -12,7 +12,7 @@ class ErgastConnector extends Connector
     use AcceptsJson;
 
     /**
-     * The Base URL of the API
+     * The Base URL of the API.
      */
     public function resolveBaseUrl(): string
     {
@@ -20,7 +20,7 @@ class ErgastConnector extends Connector
     }
 
     /**
-     * Default headers for every request
+     * Default headers for every request.
      */
     protected function defaultHeaders(): array
     {
@@ -28,7 +28,7 @@ class ErgastConnector extends Connector
     }
 
     /**
-     * Default HTTP client options
+     * Default HTTP client options.
      */
     protected function defaultConfig(): array
     {

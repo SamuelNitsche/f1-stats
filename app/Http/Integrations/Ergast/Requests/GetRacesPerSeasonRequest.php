@@ -19,7 +19,7 @@ use Saloon\PaginationPlugin\OffsetPaginator;
 class GetRacesPerSeasonRequest extends Request implements Cacheable, HasRequestPagination, Paginatable
 {
     /**
-     * The HTTP method of the request
+     * The HTTP method of the request.
      */
     protected Method $method = Method::GET;
 
@@ -28,7 +28,7 @@ class GetRacesPerSeasonRequest extends Request implements Cacheable, HasRequestP
     }
 
     /**
-     * The endpoint for the request
+     * The endpoint for the request.
      */
     public function resolveEndpoint(): string
     {
@@ -37,8 +37,7 @@ class GetRacesPerSeasonRequest extends Request implements Cacheable, HasRequestP
 
     public function paginate(Connector $connector): OffsetPaginator
     {
-        return new class(connector: $connector, request: $this) extends OffsetPaginator
-        {
+        return new class(connector: $connector, request: $this) extends OffsetPaginator {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool
