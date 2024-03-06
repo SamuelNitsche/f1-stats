@@ -37,7 +37,8 @@ class GetRacesPerSeasonRequest extends Request implements Cacheable, HasRequestP
 
     public function paginate(Connector $connector): OffsetPaginator
     {
-        return new class(connector: $connector, request: $this) extends OffsetPaginator {
+        return new class(connector: $connector, request: $this) extends OffsetPaginator
+        {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool

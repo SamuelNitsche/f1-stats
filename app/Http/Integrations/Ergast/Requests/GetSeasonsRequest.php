@@ -32,7 +32,8 @@ class GetSeasonsRequest extends Request implements Cacheable, Paginatable
 
     public function paginate(Connector $connector): OffsetPaginator
     {
-        return new class(connector: $connector, request: $this) extends OffsetPaginator {
+        return new class(connector: $connector, request: $this) extends OffsetPaginator
+        {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool
