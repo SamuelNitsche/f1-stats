@@ -18,7 +18,9 @@ use Illuminate\Console\Command;
 
 class TestCommand extends Command
 {
-    protected $signature = 'foo';
+    protected $signature = 'sync-f1-stats';
+
+    protected $description = 'Sync the F1 stats with the API.';
 
     public function __construct(
         protected FormulaOneService $formulaOne
@@ -31,7 +33,7 @@ class TestCommand extends Command
         $seasons = $this->formulaOne->getSeasons();
 
         foreach ($seasons as $season) {
-            if (in_array($season->year, ['2019', '2020', '2021', '2022', '2023', '2024'])) {
+            if ($season->year >= 2019) {
                 $dbSeason = $this->ensureSeason($season);
 
                 $races = $this->formulaOne->getRacesPerSeason($season);
@@ -44,6 +46,10 @@ class TestCommand extends Command
 
                     // Create or update the race
                     $dbRace = $this->ensureRace($dbSeason, $race, $dbCircuit);
+
+                    if ($dbRace->isSprintRace()) {
+                        $this->ensureSprintQualifyingResults($race, $dbRace->id);
+                    }
 
                     // Create or update all qualifying results
                     $this->ensureQualifyingResults($race, $dbRace->id);
@@ -164,6 +170,24 @@ class TestCommand extends Command
                 'q2' => $result->q2,
                 'q3' => $result->q3,
             ]);
+        }
+    }
+
+    protected function ensureSprintQualifyingResults(Race $race, int $databaseRaceId): void
+    {
+        $results = $this->formulaOne->getSprintQualifyingResults($race);
+
+        dd($results);
+
+        foreach ($results as $result) {
+            // Create or update the driver
+            $dbDriver = $this->ensureDriver($result->driver);
+
+            // Create or update the constructor
+            $dbConstructor = $this->ensureConstructor($result->constructor);
+
+            QualifyingResult::updateOrCreate([
+            ], []);
         }
     }
 

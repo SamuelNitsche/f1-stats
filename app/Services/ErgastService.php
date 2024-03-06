@@ -8,11 +8,13 @@ use App\Dto\QualifyingResult;
 use App\Dto\Race;
 use App\Dto\RaceResult;
 use App\Dto\Season;
+use App\Dto\SprintQualifyingResult;
 use App\Http\Integrations\Ergast\ErgastConnector;
 use App\Http\Integrations\Ergast\Requests\GetQualifyingResultsRequest;
 use App\Http\Integrations\Ergast\Requests\GetRaceResultsRequest;
 use App\Http\Integrations\Ergast\Requests\GetRacesPerSeasonRequest;
 use App\Http\Integrations\Ergast\Requests\GetSeasonsRequest;
+use App\Http\Integrations\Ergast\Requests\GetSprintQualifyingResultsRequest;
 
 class ErgastService implements FormulaOneService
 {
@@ -85,6 +87,24 @@ class ErgastService implements FormulaOneService
         foreach ($paginator->items() as $result) {
             foreach ($result['QualifyingResults'] as $driverResult) {
                 $results[] = QualifyingResult::from($driverResult);
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return SprintQualifyingResult[]
+     */
+    public function getSprintQualifyingResults(Race $race): array
+    {
+        $results = [];
+
+        $request = new GetSprintQualifyingResultsRequest($race->season, $race->round);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $result) {
+            foreach ($result['SprintResults'] as $driverResult) {
+                $results[] = SprintQualifyingResult::from($driverResult);
             }
         }
 
