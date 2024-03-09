@@ -25,8 +25,7 @@ class TestCommand extends Command
 
     public function __construct(
         protected FormulaOneService $formulaOne
-    )
-    {
+    ) {
         parent::__construct();
     }
 
