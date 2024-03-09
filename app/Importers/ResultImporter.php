@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Importers;
 
-use App\Importers\DataImporter;
 use App\Models\RaceResult;
 
 class ResultImporter implements DataImporter
@@ -27,14 +26,14 @@ class ResultImporter implements DataImporter
                 'points' => $result['points'],
                 'grid' => $result['grid'],
                 'laps' => $result['laps'],
-//                'position_text' => $result->positionText,
-//                'position_order' => $result->positionOrder,
-//                'time' => $result->time,
-//                'milliseconds' => $result->milliseconds,
-//                'fastest_lap' => $result->fastestLap,
-//                'rank' => $result->rank,
-//                'fastest_lap_time' => $result->fastestLapTime,
-//                'fastest_lap_speed' => $result->fastestLapSpeed,
+                //                'position_text' => $result->positionText,
+                //                'position_order' => $result->positionOrder,
+                //                'time' => $result->time,
+                //                'milliseconds' => $result->milliseconds,
+                //                'fastest_lap' => $result->fastestLap,
+                //                'rank' => $result->rank,
+                //                'fastest_lap_time' => $result->fastestLapTime,
+                //                'fastest_lap_speed' => $result->fastestLapSpeed,
             ];
         }
 

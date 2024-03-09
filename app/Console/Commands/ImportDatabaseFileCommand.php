@@ -144,7 +144,7 @@ class ImportDatabaseFileCommand extends Command
             ->orderBy($importClass::orderBy)
             ->chunk(5_000, function ($data) use ($importClass, $bar): void {
                 $importer = new $importClass();
-                $importer->import($data->map(fn($item) => (array) $item)->toArray());
+                $importer->import($data->map(fn ($item) => (array) $item)->toArray());
                 $bar->advance($data->count());
                 $this->newLine();
             });

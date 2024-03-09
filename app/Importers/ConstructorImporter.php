@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Importers;
 
 use App\Models\Constructor;
-use Illuminate\Support\Collection;
 
 class ConstructorImporter implements DataImporter
 {

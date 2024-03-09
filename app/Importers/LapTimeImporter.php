@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Importers;
 
-use App\Models\Driver;
 use App\Models\LapTime;
-use App\Models\Race;
-use Illuminate\Support\Collection;
 
 class LapTimeImporter implements DataImporter
 {

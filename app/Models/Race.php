@@ -38,10 +38,10 @@ class Race extends Model
      */
     public function isSprintRace(): bool
     {
-        if (null === $this->starts_at) {
+        if ($this->starts_at === null) {
             throw new LogicException('Cannot determine if race is a sprint. No session start times available.');
         }
 
-        return null !== $this->sprint_starts_at;
+        return $this->sprint_starts_at !== null;
     }
 }

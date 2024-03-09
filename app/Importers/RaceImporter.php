@@ -7,7 +7,6 @@ namespace App\Importers;
 use App\Models\Circuit;
 use App\Models\Race;
 use App\Models\Season;
-use Illuminate\Support\Collection;
 
 class RaceImporter implements DataImporter
 {

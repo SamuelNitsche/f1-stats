@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Importers;
 
 use App\Models\Season;
-use Illuminate\Support\Collection;
 
 class SeasonImporter implements DataImporter
 {
