@@ -16,7 +16,7 @@ use Saloon\PaginationPlugin\Contracts\HasRequestPagination;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
 use Saloon\PaginationPlugin\OffsetPaginator;
 
-class GetQualifyingResultsRequest extends Request implements Cacheable, HasRequestPagination, Paginatable
+class GetSprintQualifyingResultsRequest extends Request implements Cacheable, HasRequestPagination, Paginatable
 {
     /**
      * The HTTP method of the request.
@@ -34,7 +34,7 @@ class GetQualifyingResultsRequest extends Request implements Cacheable, HasReque
      */
     public function resolveEndpoint(): string
     {
-        return "/{$this->season}/{$this->round}/qualifying.json";
+        return "/{$this->season}/{$this->round}/sprint.json";
     }
 
     public function paginate(Connector $connector): OffsetPaginator

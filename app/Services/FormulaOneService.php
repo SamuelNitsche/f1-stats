@@ -10,6 +10,7 @@ use App\Dto\QualifyingResult;
 use App\Dto\Race;
 use App\Dto\RaceResult;
 use App\Dto\Season;
+use App\Dto\SprintQualifyingResult;
 
 interface FormulaOneService
 {
@@ -32,6 +33,11 @@ interface FormulaOneService
      * @return QualifyingResult[]
      */
     public function getQualifyingResults(Race $race): array;
+
+    /**
+     * @return SprintQualifyingResult[]
+     */
+    public function getSprintQualifyingResults(Race $race): array;
 
     /**
      * @return Driver[]
