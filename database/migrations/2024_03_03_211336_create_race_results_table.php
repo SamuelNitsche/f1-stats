@@ -20,7 +20,7 @@ return new class() extends Migration
             $table->foreignId('driver_id')->constrained();
             $table->foreignId('constructor_id')->constrained();
             $table->unsignedBigInteger('number')->nullable();
-            $table->unsignedBigInteger('position');
+            $table->unsignedBigInteger('position')->nullable();
             $table->unsignedBigInteger('points');
             $table->unsignedBigInteger('grid');
             $table->unsignedBigInteger('laps');

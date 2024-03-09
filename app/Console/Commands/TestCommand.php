@@ -13,6 +13,7 @@ use App\Models\Location;
 use App\Models\QualifyingResult;
 use App\Models\RaceResult;
 use App\Models\Season;
+use App\Models\SprintQualifyingResult;
 use App\Models\Status;
 use App\Services\FormulaOneService;
 use Illuminate\Console\Command;
@@ -190,7 +191,7 @@ class TestCommand extends Command
             // Create or update the constructor
             $dbConstructor = $this->ensureConstructor($result->constructor);
 
-            QualifyingResult::updateOrCreate([
+            SprintQualifyingResult::updateOrCreate([
             ], []);
         }
     }

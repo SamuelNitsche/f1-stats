@@ -19,8 +19,8 @@ class LapTime extends Data
     public static function fromArray(array $data): self
     {
         return new self(
-            lapNumber: $data['number'],
-            position: $data['Timings'][0]['position'],
+            lapNumber: (int) $data['number'],
+            position: (int) $data['Timings'][0]['position'],
             time: $data['Timings'][0]['time'],
             driverSlug: $data['Timings'][0]['driverId'],
         );
