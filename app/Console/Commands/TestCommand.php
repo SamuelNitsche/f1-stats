@@ -8,6 +8,7 @@ use App\Dto\Race;
 use App\Models\Circuit;
 use App\Models\Constructor;
 use App\Models\Driver;
+use App\Models\LapTime;
 use App\Models\Location;
 use App\Models\QualifyingResult;
 use App\Models\RaceResult;
@@ -22,7 +23,8 @@ class TestCommand extends Command
 
     public function __construct(
         protected FormulaOneService $formulaOne
-    ) {
+    )
+    {
         parent::__construct();
     }
 
@@ -50,6 +52,9 @@ class TestCommand extends Command
 
                     // Create or update all results of the race
                     $this->ensureRaceResults($race, $dbRace->id);
+
+                    // Create or update all lap times
+                    $this->ensureLapTimes($race, $dbRace->id);
                 }
             }
         }
@@ -195,5 +200,26 @@ class TestCommand extends Command
         return Status::updateOrCreate([
             'text' => $status,
         ]);
+    }
+
+    protected function ensureLapTimes(Race $race, int $databaseRaceId): void
+    {
+        $driversAttended = $this->formulaOne->getDriversAttendedRace($race);
+
+        foreach ($driversAttended as $driver) {
+            $lapTimes = $this->formulaOne->getLapTimesForDriverAndRace($driver, $race);
+
+            $driver = Driver::where('slug', $driver->driverId)->first();
+            foreach ($lapTimes as $lapTime) {
+                LapTime::updateOrCreate([
+                    'driver_id' => $driver->id,
+                    'race_id' => $databaseRaceId,
+                ], [
+                    'lap_number' => $lapTime->lapNumber,
+                    'position' => $lapTime->position,
+                    'time' => $lapTime->time,
+                ]);
+            }
+        }
     }
 }

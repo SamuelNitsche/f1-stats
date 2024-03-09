@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Dto\Driver;
+use App\Dto\LapTime;
 use App\Dto\QualifyingResult;
 use App\Dto\Race;
 use App\Dto\RaceResult;
 use App\Dto\Season;
 use App\Http\Integrations\Ergast\ErgastConnector;
+use App\Http\Integrations\Ergast\Requests\GetLapTimesForDriverAndRaceRequest;
 use App\Http\Integrations\Ergast\Requests\GetQualifyingResultsRequest;
+use App\Http\Integrations\Ergast\Requests\GetDriversByRaceRequest;
 use App\Http\Integrations\Ergast\Requests\GetRaceResultsRequest;
 use App\Http\Integrations\Ergast\Requests\GetRacesPerSeasonRequest;
 use App\Http\Integrations\Ergast\Requests\GetSeasonsRequest;
@@ -85,6 +89,40 @@ class ErgastService implements FormulaOneService
         foreach ($paginator->items() as $result) {
             foreach ($result['QualifyingResults'] as $driverResult) {
                 $results[] = QualifyingResult::from($driverResult);
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return Driver[]
+     */
+    public function getDriversAttendedRace(Race $race): array
+    {
+        $results = [];
+
+        $request = new GetDriversByRaceRequest($race->season, $race->round);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $driver) {
+            $results[] = Driver::from($driver);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return LapTime[]
+     */
+    public function getLapTimesForDriverAndRace(Driver $driver, Race $race): array
+    {
+        $results = [];
+
+        $request = new GetLapTimesForDriverAndRaceRequest($race->season, $race->round, $driver->driverId);
+        $paginator = $request->paginate($this->connector);
+        foreach ($paginator->items() as $lapTime) {
+            foreach ($lapTime['Laps'] as $lap) {
+                $results[] = LapTime::from($lap);
             }
         }
 

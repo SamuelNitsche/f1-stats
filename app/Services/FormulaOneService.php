@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Dto\Driver;
+use App\Dto\LapTime;
 use App\Dto\QualifyingResult;
 use App\Dto\Race;
 use App\Dto\RaceResult;
@@ -30,4 +32,14 @@ interface FormulaOneService
      * @return QualifyingResult[]
      */
     public function getQualifyingResults(Race $race): array;
+
+    /**
+     * @return Driver[]
+     */
+    public function getDriversAttendedRace(Race $race): array;
+
+    /**
+     * @return LapTime[]
+     */
+    public function getLapTimesForDriverAndRace(Driver $driver, Race $race): array;
 }

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 uses(Tests\TestCase::class)->in('Feature', 'Unit');
-uses(RefreshDatabase::class)->in('Feature');
+uses(RefreshDatabase::class)->in('Feature', 'Unit');
 
 beforeEach(function (): void {
     seedDatabase();
