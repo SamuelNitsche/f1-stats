@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,5 +44,15 @@ class Race extends Model
         }
 
         return $this->sprint_starts_at !== null;
+    }
+
+    public function scopeUpcoming(Builder $query): Builder
+    {
+        return $query->where('starts_at', '>', now())->orderBy('starts_at');
+    }
+
+    public function hasFinished(): bool
+    {
+        return $this->starts_at->addHours(2)->isPast();
     }
 }

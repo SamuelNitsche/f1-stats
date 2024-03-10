@@ -13,12 +13,12 @@ class IndexController extends Controller
     {
         $currentSeason = Season::with('races')->latest('year')->first();
         //        $previousRound = Race::previous()->first();
-        //        $upcomingRound = Race::upcoming()->first();
+        $upcomingRound = Race::upcoming()->first();
 
         return view('home', [
             'currentSeason' => $currentSeason,
             //            'previousRound' => $previousRound,
-            //            'upcomingRound' => $upcomingRound,
+            'upcomingRound' => $upcomingRound,
         ]);
     }
 }

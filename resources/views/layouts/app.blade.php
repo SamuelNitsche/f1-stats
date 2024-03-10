@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,900;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
     @yield('styles')
 </head>
 
@@ -35,12 +39,34 @@
     @vite('resources/js/app.js')
     @bukScripts
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
-    />
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script>
+        // Get all elements with a data-date attribute
+        const elements = document.querySelectorAll('[data-date]')
+        // Loop through each element
+        elements.forEach((element) => {
+            // Get the date from the data-date attribute and create a new Date object using Date.UTC
+            const rawDate = element.getAttribute('data-date');
+            const year = rawDate.substring(0, 4);
+            const month = rawDate.substring(5, 7) - 1;
+            const day = rawDate.substring(8, 10);
+            const hour = rawDate.substring(11, 13);
+            const minute = rawDate.substring(14, 16);
+
+            // Create a new Date object and format the date using toLocaleString. Also display the timezone
+            const date = new Date(Date.UTC(year, month, day, hour, minute));
+            const formattedDate = date.toLocaleString('en-US', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            });
+            // Set the innerText of the element to the formatted date
+            element.innerText = formattedDate;
+        })
+    </script>
 
     @stack('scripts')
 </body>
